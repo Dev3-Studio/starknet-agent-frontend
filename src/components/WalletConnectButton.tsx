@@ -31,12 +31,12 @@ export default function WalletConnectButton() {
     const [open, setOpen] = React.useState<boolean>(false)
     
     function handleClick(){
-    
+        setOpen(true)
     }
     
     return (
         <div>
-            <Button className="bg-amber-800" onClick={() => setOpen(true)}>Connect Wallet</Button>
+            <Button className="bg-amber-800" onClick={handleClick}>Connect Wallet</Button>
             
             <ProviderSelectDialog open={open} setOpen={setOpen} />
         </div>
