@@ -7,7 +7,7 @@ interface AgentCardProps {
 }
 export default function AgentCard(props: AgentCardProps) {
     return (
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer">
             <img
                 className="w-full h-56 object-cover object-center"
                 src={props.image}
