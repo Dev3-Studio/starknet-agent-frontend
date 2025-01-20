@@ -16,7 +16,7 @@ const ChatInput = (props: { inputRef: React.RefObject<HTMLInputElement>, onSend:
     
     return (
         <div className="flex w-full mb-1 p-4 mx-auto max-w-[80rem] rounded-2xl bg-primary">
-            {/*<SpeechMic inputRef={props.inputRef}/>*/}
+            {/*<SpeechInput inputRef={props.inputRef}/>*/}
             <Input
                 className="mx-1 text-white" type="text" placeholder="Ask a Question..." ref={props.inputRef}
                 onKeyDown={handleKeyDown}/>
