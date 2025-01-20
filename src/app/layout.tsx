@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import StarknetProvider from '@/components/StarknetProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,13 +29,15 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    {/*header, page, footer*/}
-                    <div className="h-full grid grid-rows-[auto,1fr,auto] min-h-screen">
-                        <Header/>
-                        {children}
-                        <Footer/>
-                    </div>
-                    <Toaster/>
+                    <StarknetProvider>
+                        {/*header, page, footer*/}
+                        <div className="h-full grid grid-rows-[auto,1fr,auto] min-h-screen">
+                            <Header/>
+                            {children}
+                            <Footer/>
+                        </div>
+                        <Toaster/>
+                    </StarknetProvider>
                 </ThemeProvider>
             </body>
         </html>
