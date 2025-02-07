@@ -6,7 +6,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import StarknetProvider from '@/components/StarknetProvider';
-
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import FixedSidebar from '@/FixedSidebar';
 const inter = Inter({ subsets: ['latin'] });
 
 // todo update metadata
@@ -29,15 +31,19 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <StarknetProvider>
-                        {/*header, page, footer*/}
-                        <div className="h-full grid grid-rows-[auto,1fr,auto] min-h-screen">
-                            <Header/>
-                            {children}
-                            <Footer/>
-                        </div>
-                        <Toaster/>
-                    </StarknetProvider>
+                    <SidebarProvider>
+                        <AppSidebar />
+                        <StarknetProvider>
+                            <FixedSidebar/>
+                            {/*header, page, footer*/}
+                            <div className="h-full grid grid-rows-[auto,1fr,auto] min-h-screen">
+                                <Header/>
+                                {children}
+                                <Footer/>
+                            </div>
+                            <Toaster/>
+                        </StarknetProvider>
+                    </SidebarProvider>
                 </ThemeProvider>
             </body>
         </html>
