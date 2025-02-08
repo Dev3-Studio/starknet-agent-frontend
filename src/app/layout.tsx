@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import StarknetProvider from '@/components/StarknetProvider';
+import { SidebarProvider } from '@/ui/sidebar';
 const inter = Inter({ subsets: ['latin'] });
 
 // todo update metadata
@@ -30,7 +31,9 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     <StarknetProvider>
-                        {children}
+                        <SidebarProvider>
+                            {children}
+                        </SidebarProvider>
                         <Toaster/>
                     </StarknetProvider>
                 </ThemeProvider>

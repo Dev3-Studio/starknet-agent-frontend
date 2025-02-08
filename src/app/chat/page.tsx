@@ -28,7 +28,7 @@ export default function ChatPage(){
         <div className="grid grid-rows-[1fr,auto]">
             
             {/*show description when no messages*/}
-            {messages.length === 0 && <ModelDescription {...placeholderModel} />}
+            {messages.length === 0 && <ModelDescription {...placeholderModel}/>}
             
             {/*else show messages*/}
             {messages.length > 0 && <div className="px-2 grid gap-2 w-full overflow-y-scroll">

@@ -12,6 +12,31 @@ import { Button } from '@/ui/button';
 import { ArrowLeftToLine } from 'lucide-react';
 import ChatHistory from '@/ChatHistory';
 import RecentAICard from '@/RecentAICard';
+import { LLMModel } from '@/lib/types';
+
+const placehodlderAIs: LLMModel[] = [
+    {
+        name: 'Map AI',
+        description: 'AI that generates maps based on user input',
+        image: 'https://placehold.co/150',
+        creator: 'Shadcn',
+        tagline: 'Generate maps from text',
+    },
+    {
+        name: 'Chat AI',
+        description: 'AI that generates chat messages based on user input',
+        image: 'https://placehold.co/150',
+        creator: 'Shadcn',
+        tagline: 'Generate chat messages from text',
+    },
+    {
+        name: 'Code AI',
+        description: 'AI that generates code based on user input',
+        image: 'https://placehold.co/150',
+        creator: 'Shadcn',
+        tagline: 'Generate code from text',
+    }
+]
 
 export function AppSidebar() {
     const { toggleSidebar } = useSidebar();
@@ -25,18 +50,21 @@ export function AppSidebar() {
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <h3 className="text-muted-foreground">Recently Used</h3>
-                    {/*todo show 3 most recent ai*/}
-                    <RecentAICard/>
+                    <h3 className="text-muted-foreground mb-2">Recently Used</h3>
+                    <div className="flex gap-4 overflow-x-scroll scrollbar-hide">
+                    {placehodlderAIs.map((ai, key) => {
+                        return <RecentAICard key={key} {...ai}/>
+                    })}
+                    </div>
                     
                 </SidebarGroup>
                 <SidebarGroup>
-                    <h3 className="text-muted-foreground">Chat History</h3>
+                    <h3 className="text-muted-foreground mb-2">Chat History</h3>
                     <ChatHistory/>
                 </SidebarGroup>
             </SidebarContent>
             
-            <SidebarFooter>
+            <SidebarFooter className="p-0">
                 <UserInfo />
             </SidebarFooter>
         </Sidebar>

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -110,6 +112,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
 
 @layer base {
   * {

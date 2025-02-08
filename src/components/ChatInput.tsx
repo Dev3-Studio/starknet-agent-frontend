@@ -15,12 +15,13 @@ const ChatInput = (props: { inputRef: React.RefObject<HTMLInputElement>, onSend:
     }
     
     return (
-        <div className="flex w-full mb-1 p-4 mx-auto max-w-[80rem] rounded-2xl bg-primary">
+        <div className="flex mb-1 p-4 mx-auto w-full max-w-[60rem] rounded-2xl">
             {/*<SpeechInput inputRef={props.inputRef}/>*/}
             <Input
-                className="mx-1 text-white" type="text" placeholder="Ask a Question..." ref={props.inputRef}
+                className="-mr-8 focus-visible:ring-primary bg-accent h-full rounded-2xl" type="text" placeholder="Message..." ref={props.inputRef}
                 onKeyDown={handleKeyDown}/>
-            <Button onClick={props.onSend}>
+            <Button onClick={props.onSend} variant="secondary"
+            className="rounded-2xl aspect-square h-full w-auto">
                 <SendHorizontal/>
             </Button>
         </div>
