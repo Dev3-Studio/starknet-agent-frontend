@@ -18,7 +18,6 @@ export default function Home() {
     
     return (
         <main className="p-10">
-            
             <div className="grid grid-cols-3 gap-10">
                 {agents.map((agent) => (
                 <AgentCard {...agent}/>

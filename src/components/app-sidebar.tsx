@@ -1,23 +1,39 @@
+'use client';
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
-    SidebarHeader, SidebarTrigger,
+    SidebarHeader, SidebarTrigger, useSidebar,
 } from '@/components/ui/sidebar';
 import SearchBar from '@/SearchBar';
 import UserInfo from '@/UserInfo';
+import { Button } from '@/ui/button';
+import { ArrowLeftToLine } from 'lucide-react';
+import ChatHistory from '@/ChatHistory';
+import RecentAICard from '@/RecentAICard';
 
 export function AppSidebar() {
+    const { toggleSidebar } = useSidebar();
     return (
-        <Sidebar>
+        <Sidebar side="left" className="">
             <SidebarHeader className="flex flex-row items-center">
                 <SearchBar/>
-                <SidebarTrigger/>
+                <Button variant="ghost" onClick={toggleSidebar}>
+                    <ArrowLeftToLine />
+                </Button>
             </SidebarHeader>
             <SidebarContent>
-                <SidebarGroup />
-                <SidebarGroup />
+                <SidebarGroup>
+                    <h3 className="text-muted-foreground">Recently Used</h3>
+                    {/*todo show 3 most recent ai*/}
+                    <RecentAICard/>
+                    
+                </SidebarGroup>
+                <SidebarGroup>
+                    <h3 className="text-muted-foreground">Chat History</h3>
+                    <ChatHistory/>
+                </SidebarGroup>
             </SidebarContent>
             
             <SidebarFooter>
