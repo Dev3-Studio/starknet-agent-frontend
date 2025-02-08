@@ -36,7 +36,7 @@ export default function WalletConnectButton() {
     
     return (
         <div>
-            <Button className="" onClick={handleClick}>Connect Wallet</Button>
+            <Button className="text-foreground" onClick={handleClick}>Connect Wallet</Button>
             
             <ProviderSelectDialog open={open} setOpen={setOpen} />
         </div>

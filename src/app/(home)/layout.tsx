@@ -9,7 +9,7 @@ export default function HomeLayout({
 }>) {
     return (
         // header, page, footer
-        <div className="h-full grid grid-rows-[auto,1fr,auto] min-h-screen">
+        <div className="h-full grid grid-rows-[auto,1fr,auto] min-h-screen w-full">
             <Header/>
             {children}
             <Footer/>
