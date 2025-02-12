@@ -5,6 +5,7 @@ import Image from 'next/image';
 import code from '@/public/code.png'
 import { Heart, MessageSquare, Search } from 'lucide-react';
 import { Input } from '@/ui/input';
+import AgentWithSuggestions from '@/AgentWithSuggestions';
 
 interface AgentCardProps {
     name: string;
@@ -15,85 +16,101 @@ interface AgentCardProps {
     tags?: string[];
 }
 
-// placeholder components
 const agents: AgentCardProps[] = [
-    {creator: "Riot Games", description: "Astra is a Controller agent in VALORANT.", image: "https://placehold.co/150", name: "Astra"},
-    {creator: "Riot Games", description: "Breach fires powerful, targeted kinetic blasts to aggressively clear a path through enemy ground.", image: "https://placehold.co/150", name: "Breach"},
-    {creator: "Riot Games", description: "Brimstone’s orbital arsenal ensures his squad always has the advantage.", image: "https://placehold.co/150", name: "Brimstone"},
+    {creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Astra"},
+    {creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Breach"},
+    {creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Brimstone"},
 ]
 
 export default function Home() {
-    
     return (
-        <main className="">
-            <section>
-                <h1 className="text-center text-4xl">Scale your professional workforce with Ai Agents</h1>
-                
-                <div className="flex bg-muted rounded-xl">
-                    <Input className="placeholder:text-foreground focus-visible:ring-0 my-auto border-0" placeholder="Search for any agent service.."/>
-                    <Button className="my-1 mr-2"><Search className="-mx-1"/></Button>
-                </div>
-            </section>
-            
-            <section>
-                <h2 className="text-lg font-light">Featured Agents</h2>
-                
-                <div className="flex overflow-x-scroll scrollbar-hide gap-4 max-w-[100vw]">
-                    {agents.map((agent, index) => (
-                        <AgentCard key={index} {...agent} />
-                    ))}
-                </div>
-            </section>
-            
-            <section>
-                <h2 className="text-lg font-light">Talk to an agent</h2>
-                <div className="rounded-2xl border-accent border-2 py-10">
-                    
-                    <div className="flex w-fit mx-auto">
-                        <img className="w-20 rounded-2xl" src="https://placehold.co/150" alt="Agent" />
-                        <div className="my-auto ml-4">
-                            <h3>Ai Agent Name</h3>
-                            <div className="flex gap-2 text-muted-foreground">
-                                <p>By @Usercreator</p>
-                                <div className="flex">
-                                    <MessageSquare />
-                                    2.5m
-                                </div>
-                                <div className="flex">
-                                    <Heart />
-                                    6.380
-                                </div>
-                            </div>
+        <main className="w-full mx-auto space-y-8 overflow-x-hidden">
+            {/* Hero Section */}
+            <div className="px-10">
+                <section className="h-80 bg-hero-gradient rounded-2xl">
+                    <div className="flex flex-col justify-center h-full w-full max-w-2xl mx-auto px-4">
+                        <h1 className="text-center text-4xl mb-4">Scale your professional workforce with Ai Agents</h1>
+                        <div className="flex bg-muted rounded-xl">
+                            <Input className="placeholder:text-foreground focus-visible:ring-0 my-auto border-0" placeholder="Search for any agent service.."/>
+                            <Button className="my-1 mr-2"><Search className="-mx-1"/></Button>
                         </div>
                     </div>
-                    
-                    <div className="w-fit mx-auto mt-4 flex flex-col gap-1 ">
-                        <Button className="font-light" variant="outline">Lorem ipsum dolor sit amet consectetur?</Button>
-                        <Button className="font-light" variant="outline">Lorem ipsum dolor sit amet consectetur?</Button>
-                        <Button className="font-light" variant="outline">Lorem ipsum dolor sit amet consectetur?</Button>
+                </section>
+            </div>
+            
+            {/* Featured Agents */}
+            <section>
+                <div className="px-4">
+                    <h2 className="text-lg font-light mb-4">Featured Agents</h2>
+                </div>
+                <div className="flex justify-center">
+                    <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4 max-w-full">
+                        {agents.map((agent, index) => (
+                            <AgentCard key={index} {...agent} />
+                        ))}
                     </div>
                 </div>
             </section>
             
-            <section className="text-center">
-                <h2 className="text-3xl font-light mb-4">Forge you own AI agent expert</h2>
-                <p className="font-light mb-8">Develop, Train & Deploy AI Agents for Businesses—Transform Your Prompting Skills into a Scalable Passive Income Stream</p>
-                
-                <Button className="px-16 font-light rounded-xl">Forge your agent</Button>
+            {/* Talk to an Agent */}
+            <section>
+                <div className="px-4">
+                    <h2 className="text-lg font-light mb-4">Talk to an agent</h2>
+                </div>
+                <div className="flex justify-center">
+                    <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4 max-w-full">
+                        <AgentWithSuggestions name="" creator="" description="" image=""/>
+                        <AgentWithSuggestions name="" creator="" description="" image=""/>
+                        <AgentWithSuggestions name="" creator="" description="" image=""/>
+                    </div>
+                </div>
             </section>
             
-            <section className="overflow-x-scroll scrollbar-hide gap-4">
-                <Card className="w-80 p-4">
-                    <Image className="w-full" src={code} alt="Code"/>
-                    <CardHeader className="text-foreground text-2xl pb-2">
-                        No coding required
-                    </CardHeader>
-                    <CardContent className="text-sm">
-                        Easily teach, train, and customize AI agents for your business
-                    </CardContent>
-                </Card>
+            {/* CTA Section */}
+            <div className="px-10">
+                <section className="text-center bg-[url(../../public/space.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl p-8 bg-blend-darken bg-black bg-opacity-50">
+                    <h2 className="text-3xl font-bold mb-4">Forge you own AI agent expert</h2>
+                    <p className="font-light mb-8">Develop, Train & Deploy AI Agents for Businesses—Transform Your Prompting Skills into a Scalable Passive Income Stream</p>
+                    <Button className="px-16 font-light rounded-xl">Forge your agent</Button>
+                </section>
+            </div>
+            
+            {/* Cards Section */}
+            <section>
+                <div className="flex justify-center">
+                    <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4 max-w-full">
+                        <Card className="w-[20rem] shrink-0 p-4">
+                            <Image className="w-full aspect-video" src={code} alt="Code"/>
+                            <CardHeader className="text-foreground text-xl pb-2 pt-4">
+                                No coding required
+                            </CardHeader>
+                            <CardContent className="text-sm">
+                                Easily teach, train, and customize AI agents for your business
+                            </CardContent>
+                        </Card>
+                        
+                        <Card className="w-[20rem] shrink-0 p-4">
+                            <Image className="w-full aspect-video" src={code} alt="Code"/>
+                            <CardHeader className="text-foreground text-xl pb-2 pt-4">
+                                Teach your processes
+                            </CardHeader>
+                            <CardContent className="text-sm">
+                                Turn your processes into instructions for your AI agents.
+                            </CardContent>
+                        </Card>
+                        
+                        <Card className="w-[20rem] shrink-0 p-4">
+                            <Image className="w-full aspect-video" src={code} alt="Code"/>
+                            <CardHeader className="text-foreground text-xl pb-2 pt-4">
+                                Guide your AI Agents skills
+                            </CardHeader>
+                            <CardContent className="text-sm">
+                                Equip AI agents with AI Tools that give them abilities, from searching Google to transcribing a YouTube video and much more.
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
             </section>
-        
         </main>
     );
 }

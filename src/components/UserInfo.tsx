@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar';
 export default function UserInfo(){
     return(
         <div className="bg-primary flex px-4 h-20">
-            <Avatar className="h-fit my-auto">
+            <Avatar className="my-auto">
                 <AvatarImage src="https://avatars.dicebear.com/api/avataaars/1.svg"/>
                 <AvatarFallback>JD</AvatarFallback>
             </Avatar>

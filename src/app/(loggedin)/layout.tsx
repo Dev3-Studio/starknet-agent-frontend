@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/app-sidebar";
 import FixedSidebar from '@/FixedSidebar';
 
 export default function ChatLayout({

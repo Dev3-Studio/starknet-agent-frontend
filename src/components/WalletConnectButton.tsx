@@ -56,10 +56,10 @@ export function ProviderSelectDialog({ open, setOpen }: { open: boolean, setOpen
                     <DialogHeader>
                         <DialogTitle>Connect Wallet</DialogTitle>
                     </DialogHeader>
-                    {connectors.map((connector) => (
-                        <button onClick={() => connect({ connector })}>
+                    {connectors.map((connector, index) => (
+                        <Button key={index} onClick={() => connect({ connector })}>
                             Connect {connector.id}
-                        </button>
+                        </Button>
                     ))}
                 </DialogContent>
             </Dialog>

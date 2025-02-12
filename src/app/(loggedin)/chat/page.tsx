@@ -1,7 +1,7 @@
 'use client';
 import ChatInput from '@/ChatInput';
 import { Fragment, useRef, useState } from 'react';
-import { LLMMessage } from '../../../langchain';
+import { LLMMessage } from '../../../../langchain';
 import ModelDescription from '@/ModelDescription';
 import { LLMModel } from '@/lib/types';
 
@@ -14,7 +14,8 @@ const placeholderModel: LLMModel = {
     name: 'Placeholder Model',
     description: 'This is a placeholder model for the chat page',
     image: 'https://via.placeholder.com/150',
-    creator: 'Shadcn'
+    creator: 'Shadcn',
+    tagline: 'This is a placeholder model for the chat page',
 }
 export default function ChatPage(){
     // todo fetch previous messages from backend

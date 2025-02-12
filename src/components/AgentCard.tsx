@@ -1,7 +1,7 @@
 import { Card } from '@/ui/card';
 import { MessageSquare } from 'lucide-react';
 
-interface AgentCardProps {
+export interface AgentCardProps {
     name: string;
     creator: string;
     description: string;
@@ -11,10 +11,10 @@ interface AgentCardProps {
 }
 export default function AgentCard(props: AgentCardProps) {
     return (
-        <Card className="shadow-lg rounded-lg overflow-hidden cursor-pointer min-w-80 flex p-4">
+        <Card className="shadow-lg rounded-lg overflow-hidden cursor-pointer w-[20rem] min-w-[20rem] flex p-4">
             <div className="w-36 h-full">
                 <img
-                    className=""
+                    className="w-32 h-full object-cover"
                     src={props.image}
                     alt="avatar"
                 />
@@ -22,7 +22,7 @@ export default function AgentCard(props: AgentCardProps) {
             <div className="p-4">
                 <h1 className="text-2xl">{props.name}</h1>
                 <p className="text-sm text-muted-foreground">By: {props.creator}</p>
-                <p className="my-2">{props.description}</p>
+                <p className="my-2 text-xs">{props.description}</p>
                 <div className="flex">
                     <MessageSquare />
                     2.5m

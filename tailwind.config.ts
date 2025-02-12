@@ -15,8 +15,8 @@ const config = {
   		center: true,
   		padding: '2rem',
   		screens: {
-  			'2xl': '1400px'
-  		}
+  			'2xl': '1400px',
+  		},
   	},
   	extend: {
   		colors: {
@@ -94,10 +94,16 @@ const config = {
   				}
   			}
   		},
+	    spacing: {
+			  'max': '63rem',
+	    },
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+	    backgroundImage: {
+		    'hero-gradient': 'linear-gradient(to bottom, #706dc0, #34335a)',
+	    },
 		  
   	}
   },
