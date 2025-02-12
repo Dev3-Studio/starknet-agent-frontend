@@ -1,9 +1,9 @@
 // auth.ts
-import NextAuth from "next-auth";
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth, { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import { getCsrfToken } from 'next-auth/react';
-import { typedData, TypedDataRevision, constants, TypedData, hash, ec, stark } from 'starknet';
+import { RpcProvider } from 'starknet';
+import { getMessageTypedData } from '@/lib/getMessageTypedData';
 
 
 export const authConfig = {
@@ -24,50 +24,21 @@ export const authConfig = {
                 if (!message) return null;
                 
                 
-                const data: TypedData = {
-                    domain: {
-                        chainId: process.env.NEXT_PUBLIC_CHAIN_ID as string, // keep chainId dynamic
-                        name: "AgentForge",
-                        version: "1.0.0",
-                    },
-                    message: {
-                        message,
-                    },
-                    primaryType: "Message",
-                    types: {
-                        Message: [
-                            {
-                                name: "message",
-                                type: "string",
-                            },
-                        ],
-                        StarkNetDomain: [
-                            {
-                                name: "name",
-                                type: "felt",
-                            },
-                            {
-                                name: "chainId",
-                                type: "felt",
-                            },
-                            {
-                                name: "version",
-                                type: "felt",
-                            },
-                        ],
-                    },
+                const data = getMessageTypedData(message);
+                
+                const isValid = await new RpcProvider().verifyMessageInStarknet(
+                    data,
+                    JSON.parse(credentials.signature),
+                    credentials.address,
+                )
+                
+                if (!isValid) {
+                    return null;
                 }
-                
-                // todo get data in form bignumberish[]
-                const msgHash = hash.computeHashOnElements(data);
-                const isValid = ec.starkCurve.verify(credentials.signature, msgHash, credentials.address);
-                
-                
-                
                 
                 return {
                     id: credentials.address,
-                    address: credentials.address,
+                    address: credentials.address
                 };
             },
         }),
