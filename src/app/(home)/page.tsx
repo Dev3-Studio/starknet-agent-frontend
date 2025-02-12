@@ -6,6 +6,7 @@ import code from '@/public/code.png'
 import { Heart, MessageSquare, Search } from 'lucide-react';
 import { Input } from '@/ui/input';
 import AgentWithSuggestions from '@/AgentWithSuggestions';
+import HorizontalScroll from '@/HorizontalScroll';
 
 interface AgentCardProps {
     name: string;
@@ -44,11 +45,11 @@ export default function Home() {
                     <h2 className="text-lg font-light mb-4">Featured Agents</h2>
                 </div>
                 <div className="flex justify-center">
-                    <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4 max-w-full">
+                    <HorizontalScroll>
                         {agents.map((agent, index) => (
                             <AgentCard key={index} {...agent} />
                         ))}
-                    </div>
+                    </HorizontalScroll>
                 </div>
             </section>
             
@@ -58,11 +59,11 @@ export default function Home() {
                     <h2 className="text-lg font-light mb-4">Talk to an agent</h2>
                 </div>
                 <div className="flex justify-center">
-                    <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4 max-w-full">
+                    <HorizontalScroll>
                         <AgentWithSuggestions name="" creator="" description="" image=""/>
                         <AgentWithSuggestions name="" creator="" description="" image=""/>
                         <AgentWithSuggestions name="" creator="" description="" image=""/>
-                    </div>
+                    </HorizontalScroll>
                 </div>
             </section>
             
@@ -78,7 +79,7 @@ export default function Home() {
             {/* Cards Section */}
             <section>
                 <div className="flex justify-center">
-                    <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4 max-w-full">
+                    <HorizontalScroll>
                         <Card className="w-[20rem] shrink-0 p-4">
                             <Image className="w-full aspect-video" src={code} alt="Code"/>
                             <CardHeader className="text-foreground text-xl pb-2 pt-4">
@@ -108,7 +109,7 @@ export default function Home() {
                                 Equip AI agents with AI Tools that give them abilities, from searching Google to transcribing a YouTube video and much more.
                             </CardContent>
                         </Card>
-                    </div>
+                    </HorizontalScroll>
                 </div>
             </section>
         </main>

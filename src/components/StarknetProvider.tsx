@@ -4,6 +4,7 @@ import { ArgentMobileConnector, isInArgentMobileAppBrowser } from 'starknetkit/a
 import { WebWalletConnector } from "starknetkit/webwallet";
 import { mainnet } from "@starknet-react/chains";
 import { StarknetConfig, publicProvider } from "@starknet-react/core";
+import { SessionProvider } from 'next-auth/react';
 
 
 export default function StarknetProvider({children} : {children: React.ReactNode}) {
@@ -33,14 +34,15 @@ export default function StarknetProvider({children} : {children: React.ReactNode
     ]
     
     return(
-        
-        <StarknetConfig
-            chains={chains}
-            provider={publicProvider()}
-            connectors={connectors}
-        >
-            {children}
-        </StarknetConfig>
+        <SessionProvider>
+            <StarknetConfig
+                chains={chains}
+                provider={publicProvider()}
+                connectors={connectors}
+            >
+                {children}
+            </StarknetConfig>
+        </SessionProvider>
     
     )
     

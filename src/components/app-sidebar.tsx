@@ -13,6 +13,7 @@ import { ArrowLeftToLine } from 'lucide-react';
 import ChatHistory from '@/ChatHistory';
 import RecentAICard from '@/RecentAICard';
 import { LLMModel } from '@/lib/types';
+import HorizontalScroll from '@/HorizontalScroll';
 
 const placehodlderAIs: LLMModel[] = [
     {
@@ -51,11 +52,11 @@ export function AppSidebar() {
             <SidebarContent>
                 <SidebarGroup>
                     <h3 className="text-muted-foreground mb-2">Recently Used</h3>
-                    <div className="flex gap-4 overflow-x-scroll scrollbar-hide">
+                    <HorizontalScroll>
                     {placehodlderAIs.map((ai, key) => {
                         return <RecentAICard key={key} {...ai}/>
                     })}
-                    </div>
+                    </HorizontalScroll>
                     
                 </SidebarGroup>
                 <SidebarGroup>
