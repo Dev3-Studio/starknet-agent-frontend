@@ -33,7 +33,7 @@ export function Hero(){
             
             </section>}
             
-            {isMobile && <section className="h-auto bg-hero-gradient rounded-2xl flex w-[calc(100vw-5px)] flex-col place-self-center p-2 gap-5">
+            {isMobile && <section className="h-auto bg-hero-gradient rounded-2xl flex w-[calc(100vw-5px)] flex-col place-self-center place-items-center p-2 gap-5">
                 <Image className="w-fit" src={top} alt="AI character images"/>
                 <div className="flex flex-col justify-center h-full w-full max-w-2xl mx-auto px-4 z-10">
                     <h1 className="text-center text-xl mb-4 drop-shadow-2xl">Scale your professional workforce
