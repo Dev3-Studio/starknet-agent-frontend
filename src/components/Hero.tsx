@@ -9,7 +9,7 @@ import useMediaQuery from '@/hooks/use-media-query';
 
 export function Hero(){
     // todo adjust breakpoint
-    const isMobile = useMediaQuery('(max-width: 640px)');
+    const isMobile = useMediaQuery('(max-width: 780px)');
     return(
         
         <div className="px-10">
