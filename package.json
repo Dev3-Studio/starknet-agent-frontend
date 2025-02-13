@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@hookform/resolvers": "^4.0.0",
+    "@radix-ui/react-toggle-group": "^1.1.2",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22",
     "@types/react": "^18",

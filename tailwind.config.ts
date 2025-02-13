@@ -95,7 +95,7 @@ const config = {
   			}
   		},
 	    spacing: {
-			  'max': '63rem',
+			  'custom': '63rem',
 	    },
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',

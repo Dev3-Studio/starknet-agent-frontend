@@ -14,11 +14,11 @@ export default function AgentWithSuggestions(props: AgentCardProps){
                     <div className="flex gap-2 text-muted-foreground">
                         <p>By @Usercreator</p>
                         <div className="flex">
-                            <MessageSquare />
+                            <MessageSquare className="size-4 my-auto mr-1" />
                             2.5m
                         </div>
                         <div className="flex">
-                            <Heart />
+                            <Heart className="size-4 my-auto mr-1" />
                             6.380
                         </div>
                     </div>

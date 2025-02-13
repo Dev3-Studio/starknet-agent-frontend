@@ -30,14 +30,14 @@ export default function Home() {
         <main className="w-full mx-auto space-y-8 overflow-x-hidden">
             {/* Hero Section */}
             <div className="px-10">
-                <section className="h-[25rem] bg-hero-gradient rounded-2xl flex">
+                <section className="h-[25rem] bg-hero-gradient rounded-2xl flex max-w-custom mx-auto">
                     <Image className="w-fit pl-8" src={left} alt="AI character images"/>
                     
-                    <div className="flex flex-col justify-center h-full w-full max-w-2xl mx-auto px-4">
-                        <h1 className="text-center text-4xl mb-4">Scale your professional workforce with Ai Agents</h1>
-                        <div className="flex bg-muted rounded-xl">
-                            <Input className="placeholder:text-foreground focus-visible:ring-0 my-auto border-0" placeholder="Search for any agent service.."/>
-                            <Button className="my-1 mr-2"><Search className="-mx-1"/></Button>
+                    <div className="flex flex-col justify-center h-full w-full max-w-2xl mx-auto px-4 z-10">
+                        <h1 className="text-center text-4xl mb-4 drop-shadow-2xl">Scale your professional workforce with <span className="font-bold">Ai Agents</span></h1>
+                        <div className="flex bg-muted rounded-xl py-1">
+                            <Input className="placeholder:text-foreground placeholder:font-light focus-visible:ring-0 border-0 my-1" placeholder="Search for any agent service.."/>
+                            <Button className="mr-3 h-full"><Search className="-mx-1"/></Button>
                         </div>
                     </div>
                     <Image className="w-fit pr-2" src={right} alt="AI character images"/>
@@ -46,8 +46,8 @@ export default function Home() {
             </div>
             
             {/* Featured Agents */}
-            <section>
-                <div className="px-4">
+            <section className="">
+                <div className="px-4 max-w-custom w-full mx-auto">
                     <h2 className="text-lg font-light mb-4">Featured Agents</h2>
                 </div>
                 <div className="flex justify-center">
@@ -60,8 +60,8 @@ export default function Home() {
             </section>
             
             {/* Talk to an Agent */}
-            <section>
-                <div className="px-4">
+            <section className="mx-auto">
+                <div className="px-4 max-w-custom w-full mx-auto">
                     <h2 className="text-lg font-light mb-4">Talk to an agent</h2>
                 </div>
                 <div className="flex justify-center">
@@ -75,7 +75,7 @@ export default function Home() {
             
             {/* CTA Section */}
             <div className="px-10">
-                <section className="text-center bg-[url(../../public/space.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl p-8 bg-blend-darken bg-black bg-opacity-50">
+                <section className="text-center bg-[url(../../public/space.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl bg-blend-darken px-20 py-16 bg-black bg-opacity-50 max-w-custom mx-auto">
                     <h2 className="text-3xl font-bold mb-4">Forge you own AI agent expert</h2>
                     <p className="font-light mb-8">Develop, Train & Deploy AI Agents for Businesses—Transform Your Prompting Skills into a Scalable Passive Income Stream</p>
                     <Button className="px-16 font-light rounded-xl">Forge your agent</Button>
@@ -83,8 +83,8 @@ export default function Home() {
             </div>
             
             {/* Cards Section */}
-            <section>
-                <div className="flex justify-center">
+            <section className="">
+                <div className="flex justify-center mb-4">
                     <HorizontalScroll>
                         <Card className="w-[20rem] shrink-0 p-4">
                             <Image className="w-full aspect-video" src={code} alt="Code"/>

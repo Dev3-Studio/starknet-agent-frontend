@@ -7,7 +7,7 @@ export default function Header(){
     const router = useRouter()
     
     return(
-        <header className="p-4 flex justify-between">
+        <header className="p-4 flex justify-between w-full max-w-custom mx-auto">
             <div className="cursor-pointer" onClick={() => router.push("/")}>
                 <Logo/>
             </div>
