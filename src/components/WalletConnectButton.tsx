@@ -15,22 +15,42 @@ import {
     DrawerHeader,
     DrawerTitle,
 } from "@/components/ui/drawer"
-import { useConnect } from "@starknet-react/core"
+import { Connector, useAccount, useConnect, useSignTypedData } from '@starknet-react/core';
 import Image, { StaticImageData } from 'next/image';
 import loginImage from '@/public/loginImage.png';
 import argent from '@/public/wallet-providers/argent.png';
 import bravos from '@/public/wallet-providers/braavos.webp';
+import { getMessageTypedData } from '@/lib/getMessageTypedData';
+import { getCsrfToken, signOut, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
+import formatCSRF from '@/lib/formatCSRF';
+import { useEffect } from 'react';
+import { stark } from 'starknet';
+import checkAddressDeployed from '@/actions/checkAddressDeployed';
+import { useToast } from '@/ui/use-toast';
 
 export default function WalletConnectButton() {
-    const [open, setOpen] = React.useState<boolean>(false)
+    const [open, setOpen] = React.useState<boolean>(false);
+    const { status } = useSession();
+    const { isConnected } = useAccount();
     
+    useEffect(() => {
+        signOut().catch();
+    }, [isConnected])
+
     function handleClick(){
-        setOpen(true)
+        
+        if (status === 'authenticated') {
+            signOut().catch();
+        } else {
+            setOpen(true)
+            
+        }
     }
     
     return (
         <div>
-            <Button className="text-foreground" onClick={handleClick}>Connect Wallet</Button>
+            <Button className="text-foreground" onClick={handleClick}>{ status === 'authenticated' ? "Log Out" : "Connect Wallet"}</Button>
             <ProviderSelectDialog open={open} setOpen={setOpen} />
         </div>
     );
@@ -65,11 +85,33 @@ const providers: Provider[] = [
     }
 ] as const
 
+
+
+
 export function ProviderSelectDialog({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
     const isDesktop = useMediaQuery("(min-width: 768px)")
-    const { connect, connectors } = useConnect()
+    const { connect, connectors } = useConnect();
+    const { address } = useAccount();
     
+    const {signTypedData, signTypedDataAsync} = useSignTypedData({});
     const getConnectorById = (id: string) => connectors.find(connector => connector.id === id)
+    const { toast } = useToast();
+    
+    async function handleConnect(connector: Connector) {
+        connect({ connector })
+        if (!address) return;
+        setOpen(false)
+        const isDeployed = await checkAddressDeployed(address);
+        if (!isDeployed) return toast({ title:'error', description:'Address not deployed' , variant: 'destructive'});
+        
+        // make user sign on connect
+        const token = await getCsrfToken();
+        if (!token) return;
+        const typedData = getMessageTypedData(formatCSRF(token));
+        const signature = await signTypedDataAsync(typedData);
+        await signIn('starknet', { signature: JSON.stringify(stark.formatSignature(signature)), address });
+        
+    }
     
     if (isDesktop) {
         return (
@@ -85,7 +127,7 @@ export function ProviderSelectDialog({ open, setOpen }: { open: boolean, setOpen
                                 {providers.map((provider, index) => {
                                     const connector = getConnectorById(provider.id)
                                     return (
-                                        <Button className="px-2 w-full" key={index} onClick={() => connect({ connector })}>
+                                        <Button className="px-2 w-full" key={index} onClick={() => handleConnect(connector!)}>
                                             <div className="w-6 h-auto mr-2 ml-1">
                                                 <Image className="object-contain" src={provider.icon} alt={provider.name}/>
                                             </div>
@@ -113,7 +155,7 @@ export function ProviderSelectDialog({ open, setOpen }: { open: boolean, setOpen
                     {providers.map((provider, index) => {
                         const connector = getConnectorById(provider.id)
                         return (
-                            <Button className="w-[20rem] mx-auto ring ring-ring px-2" key={index} onClick={() => connect({ connector })}>
+                            <Button className="w-[20rem] mx-auto ring ring-ring px-2" key={index} onClick={() => handleConnect(connector!)}>
                                 <div className="w-6 h-auto mr-2">
                                     <Image className="object-contain" src={provider.icon} alt={provider.name}/>
                                 </div>
