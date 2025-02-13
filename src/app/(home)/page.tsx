@@ -42,13 +42,11 @@ export default function Home() {
                 <div className="px-4 max-w-custom w-full mx-auto">
                     <h2 className="text-lg font-light mb-4">Featured Agents</h2>
                 </div>
-                <div>
-                    <HorizontalScroll>
-                        {agents.map((agent, index) => (
-                            <AgentCard key={index} {...agent} />
-                        ))}
-                    </HorizontalScroll>
-                </div>
+                <HorizontalScroll>
+                    {agents.map((agent, index) => (
+                        <AgentCard key={index} {...agent} />
+                    ))}
+                </HorizontalScroll>
             </section>
 
             {/* Agent Categories section */}
