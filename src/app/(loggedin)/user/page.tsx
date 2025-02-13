@@ -13,7 +13,7 @@ const agents: AgentCardProps[] = [
 export default function UserPage() {
     return (
         <main className="flex flex-col gap-5 overflow-hidden">
-            <div className='place-content-end flex justify-between gap-2 items-center p-2'>
+            <div className='place-self-end flex justify-between gap-2 items-center p-2 max-w-60'>
                 <SearchBar />
                 <UserIcon />
             </div>
