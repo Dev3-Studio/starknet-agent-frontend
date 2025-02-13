@@ -1,19 +1,15 @@
+"use client";
 import AgentCard from '@/AgentCard';
-import { Button } from '@/ui/button';
 import { Card, CardContent, CardHeader } from '@/ui/card';
 import Image from 'next/image';
 import code from '@/public/code.png'
-import { Heart, MessageSquare, Search } from 'lucide-react';
-import { Input } from '@/ui/input';
 import AgentWithSuggestions from '@/AgentWithSuggestions';
 import HorizontalScroll from '@/HorizontalScroll';
-import left from '@/public/left.png';
-import right from '@/public/right.png';
-import useMediaQuery from '@/hooks/use-media-query';
 import { Hero } from '@/Hero';
-import { useSession } from 'next-auth/react';
 import RedirectButton from '@/RedirectButton';
 import AgentCategoryFilter from '@/AgentCategoryFilter';
+import { useAtom } from 'jotai/index';
+import { dialogOpenAtom } from '@/WalletConnectButton';
 
 interface AgentCardProps {
     name: string;
@@ -23,15 +19,24 @@ interface AgentCardProps {
     numChats?: number;
     tags?: string[];
 }
-
-
 const agents: AgentCardProps[] = [
     { creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Astra" },
     { creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Breach" },
     { creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Brimstone" },
 ]
 
-export default function Home() {
+export default function Home({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    
+    const [, setIsOpen] = useAtom(dialogOpenAtom);
+    if (searchParams.error === 'unauthorized') {
+        setIsOpen(true);
+        // remove searchParams.error
+        delete searchParams.error;
+    }
     
     return (
         <main className="w-full mx-auto space-y-8 overflow-x-hidden">
@@ -51,6 +56,7 @@ export default function Home() {
 
             {/* Agent Categories section */}
             <AgentCategoryFilter />
+            
 
             {/* Talk to an Agent */}
             <section className="mx-auto">
