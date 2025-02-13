@@ -42,7 +42,7 @@ const placehodlderAIs: LLMModel[] = [
 export function AppSidebar() {
     const { toggleSidebar } = useSidebar();
     return (
-        <Sidebar side="left" className="">
+        <Sidebar side="left" className="h-full">
             <SidebarHeader className="flex flex-row items-center">
                 <SearchBar/>
                 <Button variant="ghost" onClick={toggleSidebar}>
