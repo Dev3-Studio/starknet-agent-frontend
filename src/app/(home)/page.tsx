@@ -37,7 +37,7 @@ export default function Home() {
             <Hero />
 
             {/* Featured Agents */}
-            <section className="">
+            <section className="flex flex-col items-center">
                 <div className="px-4 max-w-custom w-full mx-auto">
                     <h2 className="text-lg font-light mb-4">Featured Agents</h2>
                 </div>
@@ -51,23 +51,22 @@ export default function Home() {
             </section>
 
             {/* Agent Categories section */}
-            <div className='flex flex-col gap-10'>
-                <div>
-                    <HorizontalScroll>
-                        {
-                            buttons.map((button, index) => (
-                                <Button key={index} className="px-4 py-2">{button}</Button>
-                            ))
-                        }
-                    </HorizontalScroll>
-                </div>
-                <div>
-                    <HorizontalScroll>
-                        {agents.map((agent, index) => (
-                            <AgentCard key={index} {...agent} />
-                        ))}
-                    </HorizontalScroll>
-                </div>
+            <div className='flex flex-col items-center gap-10'>
+                {/* todo: Move to AgentCategory Filters */}
+                <HorizontalScroll>
+                    {
+                        buttons.map((button, index) => (
+                            <Button key={index} className="px-4 py-2">{button}</Button>
+                        ))
+                    }
+                </HorizontalScroll>
+
+                <HorizontalScroll>
+                    {agents.map((agent, index) => (
+                        <AgentCard key={index} {...agent} />
+                    ))}
+                </HorizontalScroll>
+
 
             </div>
 
