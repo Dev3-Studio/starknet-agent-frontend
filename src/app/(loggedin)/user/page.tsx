@@ -10,7 +10,7 @@ const agents: AgentCardProps[] = [
 
 export default function UserPage() {
     return (
-        <main className="w-full flex flex-col gap-10">
+        <main className="flex flex-col gap-10 overflow-hidden">
             <HorizontalScroll>
                 <AgentCategoryFilter />
             </HorizontalScroll>

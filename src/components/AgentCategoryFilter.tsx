@@ -20,7 +20,7 @@ export default function AgentCategoryFilter() {
             </div>
             <div className=''>
                 <HorizontalScroll>
-                    <ToggleGroup type="single" className="p-1 w-full">
+                    <ToggleGroup type="single" className="p-1 w-full overflow-hidden">
                         {categories.map((category, index) => (
                             <ToggleGroupItem value={category} key={index} className='text-nowrap'>{category}</ToggleGroupItem>
                         ))}
