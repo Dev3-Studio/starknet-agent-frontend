@@ -13,7 +13,6 @@ export default function ChatLayout({
             </div>
             <div className="grid grid-cols-[auto,1fr] pl-24">
                 <AppSidebar/>
-                
                 {children}
             </div>
         </div>
