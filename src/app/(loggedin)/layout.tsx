@@ -8,9 +8,11 @@ export default function ChatLayout({
 }>) {
     return (
         <div className="grid grid-cols-[auto,auto,1fr] w-full">
-            <FixedSidebar/>
+            <FixedSidebar />
             <AppSidebar />
+
             {children}
+
         </div>
     );
 }
