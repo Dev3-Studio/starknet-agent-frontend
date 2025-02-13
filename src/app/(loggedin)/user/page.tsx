@@ -17,9 +17,7 @@ export default function UserPage() {
                 <SearchBar />
                 <UserIcon />
             </div>
-            <HorizontalScroll>
-                <AgentCategoryFilter />
-            </HorizontalScroll>
+            <AgentCategoryFilter />
 
             <section className="pl-8 flex flex-col gap-5">
                 <h2 className='text-2xl'>Top picks for you...</h2>

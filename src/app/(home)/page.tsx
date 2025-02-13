@@ -11,6 +11,9 @@ import left from '@/public/left.png';
 import right from '@/public/right.png';
 import useMediaQuery from '@/hooks/use-media-query';
 import { Hero } from '@/Hero';
+import { useSession } from 'next-auth/react';
+import RedirectButton from '@/RedirectButton';
+import AgentCategoryFilter from '@/AgentCategoryFilter';
 
 interface AgentCardProps {
     name: string;
@@ -21,7 +24,6 @@ interface AgentCardProps {
     tags?: string[];
 }
 
-const buttons = ["Virtual Assistant", "Design and Creativty", "Digital Marketing", "Sales and Customer Service", "Finance and Accounting", "Human Resources", "Legal", "Healthcare", "Real Estate", "Education", "Software Development", "Data Science", "Product Management", "Project Management", "Business Development", "Operations", "Other"]
 
 const agents: AgentCardProps[] = [
     { creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Astra" },
@@ -30,8 +32,7 @@ const agents: AgentCardProps[] = [
 ]
 
 export default function Home() {
-
-
+    
     return (
         <main className="w-full mx-auto space-y-8 overflow-x-hidden">
             <Hero />
@@ -51,24 +52,7 @@ export default function Home() {
             </section>
 
             {/* Agent Categories section */}
-            <div className='flex flex-col items-center gap-10'>
-                {/* todo: Move to AgentCategory Filters */}
-                <HorizontalScroll>
-                    {
-                        buttons.map((button, index) => (
-                            <Button key={index} className="px-4 py-2">{button}</Button>
-                        ))
-                    }
-                </HorizontalScroll>
-
-                <HorizontalScroll>
-                    {agents.map((agent, index) => (
-                        <AgentCard key={index} {...agent} />
-                    ))}
-                </HorizontalScroll>
-
-
-            </div>
+            <AgentCategoryFilter />
 
             {/* Talk to an Agent */}
             <section className="mx-auto">
@@ -85,14 +69,14 @@ export default function Home() {
             </section>
 
             {/* CTA Section */}
-
-            <section className="text-center bg-[url(../../public/space.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl bg-blend-darken py-16 bg-black bg-opacity-50 place-self-center place-items-center w-[calc(100vw-10px)]">
-                <h2 className="text-3xl font-bold mb-4">Forge you own AI agent expert</h2>
-                <p className="font-light mb-8">Develop, Train & Deploy AI Agents for Businesses—Transform Your Prompting Skills into a Scalable Passive Income Stream</p>
-                <Button className="px-16 font-light rounded-xl justify-self-center">Forge your agent</Button>
-            </section>
-
-
+            <div className="px-10">
+                <section className="text-center bg-[url(../../public/space.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl bg-blend-darken px-20 py-16 bg-black bg-opacity-50 max-w-custom mx-auto">
+                    <h2 className="text-3xl font-bold mb-4">Forge you own AI agent expert</h2>
+                    <p className="font-light mb-8">Develop, Train & Deploy AI Agents for Businesses—Transform Your Prompting Skills into a Scalable Passive Income Stream</p>
+                    <RedirectButton/>
+                </section>
+            </div>
+            
             {/* Cards Section */}
             <section className="">
                 <div className="flex justify-center mb-4">

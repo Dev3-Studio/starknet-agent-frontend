@@ -23,7 +23,6 @@ import bravos from '@/public/wallet-providers/braavos.webp';
 import { getMessageTypedData } from '@/lib/getMessageTypedData';
 import { getCsrfToken, useSession, signIn, signOut } from 'next-auth/react';
 import formatCSRF from '@/lib/formatCSRF';
-import { useEffect } from 'react';
 import { stark } from 'starknet';
 import checkAddressDeployed from '@/actions/checkAddressDeployed';
 import { useToast } from '@/ui/use-toast';
@@ -123,7 +122,6 @@ export function ProviderSelectDialog({ open, setOpen }: { open: boolean, setOpen
         const typedData = getMessageTypedData(formatCSRF(token));
         const signature = await signTypedDataAsync(typedData);
         await signIn('starknet', { signature: JSON.stringify(stark.formatSignature(signature)), address });
-        
     }
     
     if (isDesktop) {
