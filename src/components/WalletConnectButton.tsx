@@ -50,7 +50,7 @@ export function ProviderSelectDialog({ open, setOpen }: { open: boolean, setOpen
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="!rounded-3xl bg-primary max-h-[40rem] max-w-[80vw] w-fit">
+                <DialogContent className="bg-primary max-h-[40rem] max-w-[80vw] w-fit">
                     <div className="flex p-2">
                         
                         <div className="pr-8 w-[20rem]">
