@@ -20,4 +20,3 @@ export async function sendMessage(id: string, message: string): Promise<Chat | E
 export async function deleteChat(id: string): Promise<boolean> {
     return await del(`${path}/${id}`);
 }
-
