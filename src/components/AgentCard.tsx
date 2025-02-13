@@ -32,7 +32,7 @@ export default function AgentCard(props: AgentCardProps) {
                 <div className="bg-primary rounded-2xl">
                     {props.tags && props.tags[0]}
                 </div>
-                <Button>Digital Marketing</Button>
+                <div className="bg-primary rounded-xl py-1 px-2 text-sm text-nowrap">Digital Marketing</div>
             </div>
             <div>
                 <Heart />
