@@ -1,9 +1,5 @@
 import { z } from 'zod';
 
-export interface JsonTemplate {
-    [key: string]: string | string[] | JsonTemplate;
-}
-
 /* Export Data Transfer Objects (DTOs) and corresponding types for the all entities in the application
  Naming convention: DTOs are named as z<EntityName><Action>, types are named as <EntityName><Action>
  Examples for User entity: DTO = zUser, type = User; DTO = zUserCreate, types = UserCreate */
@@ -25,11 +21,14 @@ export const zUserCreate = zUser.omit({ id: true, credits: true });
 export type UserCreate = z.infer<typeof zUserCreate>;
 
 const zLiteral = z.union([z.string(), z.number(), z.boolean(), z.null()]);
-type Literal = z.infer<typeof zLiteral>;
+export type Literal = z.infer<typeof zLiteral>;
 export type Json = Literal | { [key: string]: Json } | Json[];
 const zJson: z.ZodType<Json> = z.lazy(() =>
     z.union([zLiteral, z.array(zJson), z.record(zJson)]),
 );
+export interface JsonTemplate {
+    [key: string]: string | string[] | JsonTemplate;
+}
 const zJsonTemplate: z.ZodType<JsonTemplate> = z.record(
     z.string(),
     z.string().or(z.string().array()).or(z.lazy(() => zJsonTemplate)),
@@ -81,17 +80,15 @@ export const zAgentCreate = zAgent
         pricePerTokenUsd: true,
         totalChats: true,
         totalMessages: true,
+        creator: true,
     })
     .merge(z.object({
-        creator: z.string().uuid(),
         biography: z.string(),
         directive: z.string(),
         rules: z.string().array(),
         tools: zAgentTool.array(),
     }));
 export type AgentCreate = z.infer<typeof zAgentCreate>;
-
-
 
 export const zMessage = z.object({
     type: z.string(),
@@ -110,7 +107,7 @@ export type Message = z.infer<typeof zMessage>;
 export const zChat = z.object({
     id: z.string().uuid(),
     user: zUser,
-    agent: zAgent,
+    agent: zAgentPublic,
     title: z.string().optional(),
     messages: z.array(zMessage).optional(),
 });
@@ -121,7 +118,6 @@ export const zChatCreate = zChat
         title: true,
     })
     .merge(z.object({
-        user: z.string().uuid(),
         agent: z.string().uuid(),
     }));
 export type ChatCreate = z.infer<typeof zChatCreate>;
