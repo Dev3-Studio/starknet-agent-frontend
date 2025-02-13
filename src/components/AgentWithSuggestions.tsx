@@ -5,7 +5,7 @@ import { Button } from '@/ui/button';
 export default function AgentWithSuggestions(props: AgentCardProps){
     
     return(
-        <div className="rounded-2xl border-accent border-2 py-10 px-10 w-[30rem] min-w-[30rem]">
+        <div className="rounded-2xl border-accent border-2 py-10 px-10 w-[30rem] min-w-[30rem] bg-muted">
             
             <div className="flex w-fit mx-auto">
                 <img className="w-20 rounded-2xl" src="https://placehold.co/150" alt="Agent" />
