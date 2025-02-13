@@ -1,6 +1,8 @@
 'use client';
 import Image from 'next/image';
 import left from '@/public/left.png';
+import bottom from '@/public/bottom.png';
+import top from '@/public/top.png';
 import { Input } from '@/ui/input';
 import { Button } from '@/ui/button';
 import { Search } from 'lucide-react';
@@ -31,8 +33,19 @@ export function Hero(){
             
             </section>}
             
-            {isMobile && <section className="h-[25rem] bg-hero-gradient rounded-2xl flex max-w-custom mx-auto">
-            
+            {isMobile && <section className="h-auto bg-hero-gradient rounded-2xl flex w-[calc(100vw-5px)] flex-col place-self-center p-2 gap-5">
+                <Image className="w-fit" src={top} alt="AI character images"/>
+                <div className="flex flex-col justify-center h-full w-full max-w-2xl mx-auto px-4 z-10">
+                    <h1 className="text-center text-xl mb-4 drop-shadow-2xl">Scale your professional workforce
+                        with <span className="font-bold">Ai Agents</span></h1>
+                    <div className="flex bg-muted rounded-xl py-1">
+                        <Input
+                            className="placeholder:text-foreground placeholder:font-light focus-visible:ring-0 border-0 my-1"
+                            placeholder="Search for any agent service.."/>
+                        <Button className="mr-3 h-full"><Search className="-mx-1"/></Button>
+                    </div>
+                </div>
+                <Image className="w-fit" src={bottom} alt="AI character images"/>
             </section>
             
             }
