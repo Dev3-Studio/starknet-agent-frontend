@@ -7,6 +7,8 @@ import { Heart, MessageSquare, Search } from 'lucide-react';
 import { Input } from '@/ui/input';
 import AgentWithSuggestions from '@/AgentWithSuggestions';
 import HorizontalScroll from '@/HorizontalScroll';
+import left from '@/public/left.png';
+import right from '@/public/right.png';
 
 interface AgentCardProps {
     name: string;
@@ -28,7 +30,9 @@ export default function Home() {
         <main className="w-full mx-auto space-y-8 overflow-x-hidden">
             {/* Hero Section */}
             <div className="px-10">
-                <section className="h-80 bg-hero-gradient rounded-2xl">
+                <section className="h-[25rem] bg-hero-gradient rounded-2xl flex">
+                    <Image className="w-fit pl-8" src={left} alt="AI character images"/>
+                    
                     <div className="flex flex-col justify-center h-full w-full max-w-2xl mx-auto px-4">
                         <h1 className="text-center text-4xl mb-4">Scale your professional workforce with Ai Agents</h1>
                         <div className="flex bg-muted rounded-xl">
@@ -36,6 +40,8 @@ export default function Home() {
                             <Button className="my-1 mr-2"><Search className="-mx-1"/></Button>
                         </div>
                     </div>
+                    <Image className="w-fit pr-2" src={right} alt="AI character images"/>
+                    
                 </section>
             </div>
             
