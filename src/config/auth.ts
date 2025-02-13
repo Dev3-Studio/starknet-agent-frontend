@@ -1,10 +1,10 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { getCsrfToken } from 'next-auth/react';
-import { RpcProvider, typedData } from 'starknet';
 import { getMessageTypedData } from '@/lib/getMessageTypedData';
 import formatCSRF from '@/lib/formatCSRF';
 import { getProvider } from '@/actions/getProvider';
+import { createUser } from '@/actions/users';
 
 export const authConfig = {
     providers: [
@@ -56,6 +56,11 @@ export const authConfig = {
                         console.log('Invalid signature');
                         return null;
                     }
+                    
+                    await createUser({ walletAddress: credentials.address }).catch((error) => {
+                        console.error('Failed to create user:', error);
+                        return null;
+                    });
                     
                     return {
                         id: credentials.address,
