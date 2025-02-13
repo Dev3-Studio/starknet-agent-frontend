@@ -21,12 +21,11 @@ export const zUserCreate = zUser.omit({ id: true, credits: true });
 export type UserCreate = z.infer<typeof zUserCreate>;
 
 const zLiteral = z.union([z.string(), z.number(), z.boolean(), z.null()]);
-type Literal = z.infer<typeof zLiteral>;
-type Json = Literal | { [key: string]: Json } | Json[];
+export type Literal = z.infer<typeof zLiteral>;
+export type Json = Literal | { [key: string]: Json } | Json[];
 const zJson: z.ZodType<Json> = z.lazy(() =>
     z.union([zLiteral, z.array(zJson), z.record(zJson)]),
 );
-
 export interface JsonTemplate {
     [key: string]: string | string[] | JsonTemplate;
 }
@@ -52,6 +51,7 @@ export const zAgent = z.object({
     id: z.string().uuid(),
     name: z.string(),
     description: z.string(),
+    tagline: z.string().max(32),
     creator: zUser,
     pricePerTokenUsd: z.number().int().min(0),
     royaltyPerTokenUsd: z.number().int().min(0),
@@ -66,7 +66,28 @@ export const zAgent = z.object({
 });
 export type Agent = z.infer<typeof zAgent>;
 
-export const zAgentCreate = zAgent.omit({ id: true, creator: true, }).merge(z.object({ creator: z.string().uuid() }));
+export const zAgentPublic = zAgent.omit({
+    biography: true,
+    directive: true,
+    rules: true,
+    tools: true,
+});
+export type AgentPublic = z.infer<typeof zAgentPublic>;
+
+export const zAgentCreate = zAgent
+    .omit({
+        id: true,
+        pricePerTokenUsd: true,
+        totalChats: true,
+        totalMessages: true,
+        creator: true,
+    })
+    .merge(z.object({
+        biography: z.string(),
+        directive: z.string(),
+        rules: z.string().array(),
+        tools: zAgentTool.array(),
+    }));
 export type AgentCreate = z.infer<typeof zAgentCreate>;
 
 export const zMessage = z.object({
@@ -76,9 +97,9 @@ export const zMessage = z.object({
         content: z.string(),
         role: z.string().optional(),
         name: z.string().optional(),
-        tool_call_id: z.string().optional(),
-        additional_kwargs: z.record(z.string(), z.any()).optional(),
-        response_metadata: z.record(z.string(), z.any()).optional(),
+        toolCallId: z.string().optional(),
+        additionalKwargs: z.record(z.string(), z.any()).optional(),
+        responseMetadata: z.record(z.string(), z.any()).optional(),
     }),
 });
 export type Message = z.infer<typeof zMessage>;
@@ -86,19 +107,17 @@ export type Message = z.infer<typeof zMessage>;
 export const zChat = z.object({
     id: z.string().uuid(),
     user: zUser,
-    agent: zAgent,
+    agent: zAgentPublic,
     title: z.string().optional(),
-    messages: z.array(zMessage),
+    messages: z.array(zMessage).optional(),
 });
 export type Chat = z.infer<typeof zChat>;
 
 export const zChatCreate = zChat
     .pick({
         title: true,
-        messages: true,
     })
     .merge(z.object({
-        user: z.string().uuid(),
         agent: z.string().uuid(),
     }));
 export type ChatCreate = z.infer<typeof zChatCreate>;

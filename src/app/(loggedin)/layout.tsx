@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/app-sidebar";
+import { AppSidebar } from '@/app-sidebar';
 import FixedSidebar from '@/FixedSidebar';
 
 export default function ChatLayout({
@@ -7,12 +7,15 @@ export default function ChatLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="grid grid-cols-[auto,auto,1fr] w-full">
-            <FixedSidebar />
-            <AppSidebar />
-
-            {children}
-
+        <div className="relative w-full">
+            <div className="fixed top-0 left-0 h-full">
+                <FixedSidebar/>
+            </div>
+            <div className="grid grid-cols-[auto,1fr] pl-24">
+                <AppSidebar/>
+                
+                {children}
+            </div>
         </div>
     );
 }

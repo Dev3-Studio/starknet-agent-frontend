@@ -24,7 +24,7 @@ export default function FixedSidebar() {
     const { toggleSidebar, open } = useSidebar();
     const router = useRouter();
     return (
-        <div className="h-full w-24 bg-muted text-white z-20 grid grid-rows-[auto,auto,1fr,auto] max-h-screen">
+        <div className="h-full w-24 bg-muted text-white z-20 grid grid-rows-[auto,auto,1fr,auto] max-h-screen fixed">
 
             <div className="flex flex-col  mt-4">
                 <div onClick={() => router.push('/')} className="flex justify-center">
