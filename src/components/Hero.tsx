@@ -30,7 +30,12 @@ export function Hero(){
                 <Image className="w-fit pr-2" src={right} alt="AI character images"/>
             
             </section>}
-        
+            
+            {isMobile && <section className="h-[25rem] bg-hero-gradient rounded-2xl flex max-w-custom mx-auto">
+            
+            </section>
+            
+            }
         
         {/*    todo add mobile handler*/}
     </div>
