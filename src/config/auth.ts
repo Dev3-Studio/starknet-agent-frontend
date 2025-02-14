@@ -1,9 +1,10 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { getServerSession, NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { getCsrfToken } from 'next-auth/react';
 import { getMessageTypedData } from '@/lib/getMessageTypedData';
 import formatCSRF from '@/lib/formatCSRF';
 import { getProvider } from '@/actions/getProvider';
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
 import { createUser } from '@/actions/users';
 
 export const authConfig = {
@@ -57,10 +58,7 @@ export const authConfig = {
                         return null;
                     }
                     
-                    await createUser({ walletAddress: credentials.address }).catch((error) => {
-                        console.error('Failed to create user:', error);
-                        return null;
-                    });
+                    const newUser = await createUser({ walletAddress: credentials.address });
                     
                     return {
                         id: credentials.address,
@@ -97,4 +95,13 @@ export const authConfig = {
     debug: process.env.NODE_ENV === 'development', // Enable debug logs in development
 } satisfies NextAuthOptions;
 
-export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
+export function auth(
+    ...args:
+        | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+        | [NextApiRequest, NextApiResponse]
+        | []
+) {
+    return getServerSession(...args, authConfig)
+}
+
+export const { handlers, signIn, signOut } = NextAuth(authConfig);
