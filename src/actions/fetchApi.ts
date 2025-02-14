@@ -5,10 +5,10 @@ import { getServerSession } from 'next-auth';
 import jwt from 'jsonwebtoken';
 
 function signJwt(address: string) {
-    if (!process.env.JWT_SECRET) {
-        throw new Error('Make sure you set JWT_SECRET in your environment variables');
+    if (!process.env.NEXTAUTH_SECRET) {
+        throw new Error('Make sure you set NEXTAUTH_SECRET in your environment variables');
     }
-    return jwt.sign({ address }, process.env.JWT_SECRET, { expiresIn: '1m' });
+    return jwt.sign({ address }, process.env.NEXTAUTH_SECRET, { expiresIn: '1m' });
 }
 
 async function getAuthHeader() {
@@ -27,53 +27,53 @@ function getBaseUrl(): string {
 }
 
 export type ErrorResponse = {
-    message: string;
+    error: string;
 }
 
 export async function get(path: string, params?: ConstructorParameters<typeof URLSearchParams>[0]) {
-    const baseUrl = new URL(`${getBaseUrl()}/${path}`);
+    const baseUrl = new URL(getBaseUrl());
+    baseUrl.pathname = path;
     const searchParams = new URLSearchParams(params);
-    const headers = new Headers();
-    headers.append('Authorization', await getAuthHeader());
-    const response = await fetch(`${baseUrl.toString()}?${searchParams.toString()}`, {
-        headers,
+    return await fetch(`${baseUrl.toString()}?${searchParams.toString()}`, {
+        headers: {
+            'Authorization': await getAuthHeader(),
+        }
     });
-    return await response.json();
 }
 
 export async function post(path: string, body?: Json) {
-    const baseUrl = new URL(`${getBaseUrl()}/${path}`);
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', await getAuthHeader());
-    const response = await fetch(baseUrl.toString(), {
+    const baseUrl = new URL(getBaseUrl());
+    baseUrl.pathname = path;
+    return await fetch(baseUrl.toString(), {
         method: 'POST',
-        headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': await getAuthHeader(),
+        },
         body: JSON.stringify(body),
     });
-    return await response.json();
 }
 
 export async function patch(path: string, body?: Json) {
-    const baseUrl = new URL(`${getBaseUrl()}/${path}`);
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', await getAuthHeader());
-    const response = await fetch(baseUrl.toString(), {
+    const baseUrl = new URL(getBaseUrl());
+    baseUrl.pathname = path;
+    return await fetch(baseUrl.toString(), {
         method: 'PATCH',
-        headers,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': await getAuthHeader(),
+        },
         body: JSON.stringify(body),
     });
-    return await response.json();
 }
 
 export async function del(path: string) {
-    const baseUrl = new URL(`${getBaseUrl()}/${path}`);
-    const headers = new Headers();
-    headers.append('Authorization', await getAuthHeader());
-    const response = await fetch(baseUrl.toString(), {
+    const baseUrl = new URL(getBaseUrl());
+    baseUrl.pathname = path;
+    return await fetch(baseUrl.toString(), {
         method: 'DELETE',
-        headers,
+        headers: {
+            'Authorization': await getAuthHeader(),
+        }
     });
-    return response.ok;
 }
