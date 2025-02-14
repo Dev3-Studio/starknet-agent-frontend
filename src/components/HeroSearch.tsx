@@ -7,8 +7,9 @@ import { getAgents } from '@/actions/agents';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/ui/button';
 
-export default function SearchBar() {
+export default function HeroSearch() {
     const router = useRouter();
     const [query, setQuery] = useState('');
     const [isOpen, setIsOpen] = useState(false);
@@ -30,10 +31,11 @@ export default function SearchBar() {
     return (
         <div className="relative w-full">
             <span className="pl-2 flex bg-muted w-full rounded-md">
-                <Search className="my-auto text-primary"/>
+
+                
                 <Input
-                    className="border-none focus-visible:ring-0"
-                    placeholder="Search AI agents"
+                    className="placeholder:text-foreground placeholder:font-light focus-visible:ring-0 border-0 my-1"
+                    placeholder="Search for any agent service.."
                     value={query}
                     onChange={(e) => {
                         setQuery(e.target.value);
@@ -41,6 +43,7 @@ export default function SearchBar() {
                     }}
                     onFocus={() => setIsOpen(true)}
                 />
+                <Button className="mr-3 h-full"><Search className="-mx-1"/></Button>
             </span>
             
             {isOpen && data && data.length > 0 && (

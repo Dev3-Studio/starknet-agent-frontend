@@ -22,6 +22,7 @@ export interface GetAgentsOptions {
     creator?: string;
     sort?: 'chats' | 'messages' | 'date';
     order?: string;
+    searchQuery?: string;
 }
 export async function getAgents(options: GetAgentsOptions): Promise<AgentPublic[] | ErrorResponse> {
     const searchParams: string[][] = [];
