@@ -5,6 +5,7 @@ import { AgentPublic } from '@/lib/dto';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { formatAddress } from '@/lib/utils';
+import AgentInfoDialog from '@/AgentInfoDialog';
 
 export interface AgentCardProps {
     name: string;
@@ -23,15 +24,18 @@ export default function AgentCard(props: AgentPublic) {
     }
     
     return (
-        <Card className="shadow-lg rounded-3xl overflow-hidden cursor-pointer w-[20rem] min-w-[22rem] flex p-4" onClick={handleClick}>
+        <Card className="shadow-lg rounded-3xl overflow-hidden w-[20rem] min-w-[22rem] flex p-4 relative" >
+            <AgentInfoDialog agent={props} className="absolute top-4 right-4" />
+            
             <Image
-                className="w-32 h-full object-cover rounded-xl mr-4"
+                className="w-32 h-full object-cover rounded-xl mr-4 cursor-pointer"
                 src={props.image}
                 alt="avatar"
                 
                 width={1000}
                 height={1000}
-            
+                
+                onClick={handleClick}
             />
             
             <div className="flex flex-col gap-1">
