@@ -1,8 +1,21 @@
 import { AgentCardProps } from '@/AgentCard';
-import { Heart, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { Button } from '@/ui/button';
+import { useRouter } from 'next/navigation';
+import { AgentPublic } from '@/lib/dto';
 
-export default function AgentWithSuggestions(props: AgentCardProps){
+
+const messageSuggestions = [
+    "Lorem ipsum dolor sit amet consectetur?",
+    "Lorem ipsum dolor sit amet consectetur?",
+    "Lorem ipsum dolor sit amet consectetur?",
+]
+export default function AgentWithSuggestions(props: AgentPublic){
+    const router = useRouter();
+    
+    function handleClick(message: string) {
+        router.push(`/chat/?agentId=${props.id}?message=${message}`);
+    }
     
     return(
         <div className="rounded-2xl border-accent border-2 py-10 px-10 w-[30rem] min-w-[30rem] bg-muted">
@@ -17,18 +30,16 @@ export default function AgentWithSuggestions(props: AgentCardProps){
                             <MessageSquare className="size-4 my-auto mr-1" />
                             2.5m
                         </div>
-                        <div className="flex">
-                            <Heart className="size-4 my-auto mr-1" />
-                            6.380
-                        </div>
                     </div>
                 </div>
             </div>
             
             <div className="w-fit mx-auto mt-4 flex flex-col gap-1 ">
-                <Button className="font-light" variant="outline">Lorem ipsum dolor sit amet consectetur?</Button>
-                <Button className="font-light" variant="outline">Lorem ipsum dolor sit amet consectetur?</Button>
-                <Button className="font-light" variant="outline">Lorem ipsum dolor sit amet consectetur?</Button>
+                {
+                    messageSuggestions.map((message, index) => (
+                        <Button key={index} className="font-light" variant="outline" onClick={()=> handleClick(message)}>{message}</Button>
+                    ))
+                }
             </div>
         </div>
     )

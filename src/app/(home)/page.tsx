@@ -10,6 +10,8 @@ import RedirectButton from '@/RedirectButton';
 import AgentCategoryFilter from '@/AgentCategoryFilter';
 import { useAtom } from 'jotai/index';
 import { dialogOpenAtom } from '@/WalletConnectButton';
+import { getAgents } from '@/actions/agents';
+import { useQuery } from '@tanstack/react-query';
 
 interface AgentCardProps {
     name: string;
@@ -31,6 +33,17 @@ export default function Home({
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
     
+    const popularAgents = useQuery({
+        queryKey: ['popularAgents'],
+        queryFn: async () => {
+            const res = await getAgents({ limit: 5, sort: 'chats', order: 'desc' });
+            if ('error' in res) return [];
+            return res;
+        },
+        staleTime: 1000 * 60 * 5,
+    });
+    
+    
     const [, setIsOpen] = useAtom(dialogOpenAtom);
     
     
@@ -50,7 +63,11 @@ export default function Home({
                     <h2 className="text-lg font-light mb-4">Featured Agents</h2>
                 </div>
                 <HorizontalScroll>
-                    {agents.map((agent, index) => (
+                    {
+                        !popularAgents.data || popularAgents.data.length === 0 && <p>No agents found</p>
+                    }
+                    
+                    {popularAgents.data && popularAgents.data.map((agent, index) => (
                         <AgentCard key={index} {...agent} />
                     ))}
                 </HorizontalScroll>
