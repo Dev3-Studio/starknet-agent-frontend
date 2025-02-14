@@ -4,19 +4,16 @@ import AgentCategoryFilter from '@/AgentCategoryFilter';
 import SearchBar from '@/components/SearchBar';
 import { UserIcon } from 'lucide-react';
 import { auth } from '@/config/auth';
-import { getAgents, GetAgentsOptions } from '@/actions/agents';
 import { getUser } from '@/actions/users';
 import YourCreation from '@/YourCreation';
 import AgentCreate from '@/AgentCreate';
+import { fetchAgentsOrReturnEmpty } from '@/lib/utils';
+import { redirect } from 'next/navigation';
 
 export default async function UserPage() {
     const session = await auth();
     
-    async function fetchAgentsOrReturnEmpty(options: GetAgentsOptions) {
-        const agents = await getAgents(options);
-        if ('error' in agents) return [];
-        return agents;
-    }
+    
     
     const [featuredAgents, newAgents, user] = await Promise.all([
         fetchAgentsOrReturnEmpty({ limit: 6, sort: 'chats', order: 'desc' }),
@@ -24,7 +21,7 @@ export default async function UserPage() {
         getUser(session!.user.address),
     ]);
     
-    if ('error' in user) return <p>{user.error}</p>;
+    if ('error' in user) redirect('/?error=unauthorized');
     
     const [creations, continueTalkingTo] = await Promise.all([
         fetchAgentsOrReturnEmpty({ creator: user.id }),

@@ -2,7 +2,7 @@
 
 import Logo from '@/public/logo.svg';
 import { useSidebar } from '@/ui/sidebar';
-import { ArrowLeftToLine, ArrowRightToLine, Bookmark, Plus } from 'lucide-react';
+import { ArrowLeftToLine, ArrowRightToLine, Bookmark, Compass, Plus } from 'lucide-react';
 import { Button } from '@/ui/button';
 import { Separator } from '@/ui/separator';
 import { usePathname, useRouter } from 'next/navigation';
@@ -59,7 +59,7 @@ export default function FixedSidebar() {
             <div className="flex flex-col items-center gap-4 px-3">
                 <Separator className="w-full h-[2px] bg-accent"/>
                 
-                <Plus className="size-8 rounded-full bg-background border-foreground border cursor-pointer"/>
+                <Plus className="size-8 rounded-full bg-background border-foreground border cursor-pointer" onClick={()=> router.push('/forge-agent')}/>
                 <Bookmark className="size-8 fill-foreground cursor-pointer"/>
                 
                 <Separator className="w-full h-[2px] bg-accent"/>
@@ -72,13 +72,17 @@ export default function FixedSidebar() {
                         src={agent.image}
                         name={agent.name}
                         active={currentAgentId === agent.id}
+                        id={agent.id}
                     />
                 ))}
             </div>
             
             
             <div className="bg-background w-full flex justify-center h-20">
-                <Plus className="size-14 bg-muted rounded-full p-1 cursor-pointer my-auto"/>
+                <Compass className="size-14 bg-muted rounded-full p-1 cursor-pointer my-auto"
+                         onClick={() => router.push('/user')}
+                
+                />
             </div>
         </div>
     );
