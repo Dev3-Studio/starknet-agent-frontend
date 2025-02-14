@@ -11,6 +11,17 @@ export async function getChat(id: string): Promise<Chat | ErrorResponse> {
     return zChat.parse(await res.json());
 }
 
+interface GetChatsOptions {
+    order?: 'asc' | 'desc';
+    agentId?: string;
+    includeMessages?: boolean;
+}
+export async function getChats(options: GetChatsOptions): Promise<Chat[] | ErrorResponse> {
+    const res = await get(path, { ...options, includeMessages: options.includeMessages ? 'true' : 'false' });
+    if (!res.ok) return await res.json();
+    return zChat.array().parse(await res.json());
+}
+
 export async function createChat(chat: ChatCreate): Promise<Chat | ErrorResponse> {
     const res = await post(path, chat);
     if (!res.ok) return await res.json();
