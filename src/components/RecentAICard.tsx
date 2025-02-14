@@ -16,7 +16,7 @@ export default function RecentAICard({agent}: Chat){
         <Card className="flex p-3 min-w-[15rem] cursor-pointer" onClick={handleClick}>
             <Image src={agent.image}
                    alt={agent.name}
-                   className="aspect-square w-[4.5rem] h-fit my-auto rounded-2xl"
+                   className="aspect-square w-[4.5rem] h-fit my-auto rounded-2xl object-cover"
                    width={1000}
                    height={1000}
             />

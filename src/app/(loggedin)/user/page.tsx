@@ -1,5 +1,5 @@
 import HorizontalScroll from '@/HorizontalScroll';
-import AgentCard, { AgentCardProps } from '@/AgentCard';
+import AgentCard from '@/AgentCard';
 import AgentCategoryFilter from '@/AgentCategoryFilter';
 import SearchBar from '@/components/SearchBar';
 import { UserIcon } from 'lucide-react';
@@ -7,13 +7,13 @@ import { auth } from '@/config/auth';
 import { getUser } from '@/actions/users';
 import YourCreation from '@/YourCreation';
 import AgentCreate from '@/AgentCreate';
-import { fetchAgentsOrReturnEmpty } from '@/lib/utils';
+import { fetchAgentsOrReturnEmpty, fetchChatsOrReturnEmpty } from '@/lib/utils';
 import { redirect } from 'next/navigation';
+import ContinueTalking from '@/ContinueTalking';
+import { categories } from '@/lib/constants';
 
 export default async function UserPage() {
     const session = await auth();
-    
-    
     
     const [featuredAgents, newAgents, user] = await Promise.all([
         fetchAgentsOrReturnEmpty({ limit: 6, sort: 'chats', order: 'desc' }),
@@ -25,13 +25,12 @@ export default async function UserPage() {
     
     const [creations, continueTalkingTo] = await Promise.all([
         fetchAgentsOrReturnEmpty({ creator: user.id }),
-        // todo fetch agents talked to recently
-        fetchAgentsOrReturnEmpty({ limit: 6, sort: 'messages', order: 'desc' }),
+        fetchChatsOrReturnEmpty({ includeMessages: true, order: 'desc' }),
     ]);
     
-    const recentCategory = continueTalkingTo[0].tags[0];
-    const topPicks = await fetchAgentsOrReturnEmpty({ tags: [recentCategory], limit: 6, sort: 'chats', order: 'desc' });
-    
+    // todo top picks algorithm
+    const category = categories[0];
+    const topPicks = await fetchAgentsOrReturnEmpty({ tags: [category], limit: 6, sort: 'chats', order: 'desc' });
     
     return (
         <main className="flex flex-col gap-5 overflow-hidden mb-10">
@@ -55,8 +54,8 @@ export default async function UserPage() {
             <section className="pl-8 flex flex-col gap-5">
                 <h2 className='text-2xl'>Continue talking to...</h2>
                 <HorizontalScroll>
-                    {continueTalkingTo.map((agent, index) => (
-                        <AgentCard key={index} {...agent} />
+                    {continueTalkingTo.map((chats, index) => (
+                        <ContinueTalking key={index} {...chats} />
                     ))}
                 </HorizontalScroll>
             </section>

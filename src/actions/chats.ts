@@ -11,7 +11,7 @@ export async function getChat(id: string): Promise<Chat | ErrorResponse> {
     return zChat.parse(await res.json());
 }
 
-interface GetChatsOptions {
+export interface GetChatsOptions {
     order?: 'asc' | 'desc';
     agentId?: string;
     includeMessages?: boolean;

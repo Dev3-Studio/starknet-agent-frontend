@@ -76,7 +76,6 @@ export default function Credits() {
                 : undefined,
     });
     
-    console.log(data);
     
     const user = useQuery({
         queryKey: ['user'],
@@ -100,7 +99,6 @@ export default function Credits() {
     }
     
     async function buyCredits() {
-        
         
         if (!account) return;
         if (!numCredits || numCredits < 1) {
