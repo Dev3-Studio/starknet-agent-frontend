@@ -1,14 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
-import StarknetProvider from '@/components/StarknetProvider';
-import { SidebarProvider } from '@/ui/sidebar';
-const inter = Inter({ subsets: ['latin'] });
 import { SetMetadata } from '@/metadata';
 import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
-import { TooltipProvider } from '@/ui/tooltip';
+import Providers from '@/context';
+
+const inter = Inter({ subsets: ['latin'] });
 
 /*##################################################################
  * Do not change metadata below, change it in the metadata.ts file *
@@ -21,7 +18,7 @@ const openGraph: OpenGraph = {
     siteName: SetMetadata.siteName,
     url: SetMetadata.url,
     images: [SetMetadata.image],
-}
+};
 
 export const metadata: Metadata = {
     title: SetMetadata.title,
@@ -35,13 +32,12 @@ export const metadata: Metadata = {
             url: `${process.env.SITE_URL}/oembed.json`,
             type: 'application/json+oembed',
         },
-    }
+    },
 };
 
 export const viewport: Viewport = {
     themeColor: SetMetadata.themeColor,
-}
-
+};
 
 export default function RootLayout({
     children,
@@ -51,21 +47,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="dark"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <StarknetProvider>
-                        <SidebarProvider>
-                            <TooltipProvider>
-                            {children}
-                            </TooltipProvider>
-                        </SidebarProvider>
-                        <Toaster/>
-                    </StarknetProvider>
-                </ThemeProvider>
+                <Providers>
+                    {children}
+                </Providers>
             </body>
         </html>
     );

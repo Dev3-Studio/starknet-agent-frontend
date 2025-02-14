@@ -1,12 +1,19 @@
 'use server';
 
 import { ErrorResponse, get, post } from '@/actions/fetchApi';
-import { Agent, AgentCreate, AgentPublic } from '@/lib/dto';
+import { Agent, AgentCreate, AgentPublic, zAgent, zAgentPublic } from '@/lib/dto';
 
-const path = '/agents';
+const path = 'agents';
 
 export async function getAgent(id: string): Promise<Agent | AgentPublic | ErrorResponse> {
-    return await get(`${path}/${id}`);
+    const res = await get(`${path}/${id}`);
+    if (!res.ok) return await res.json();
+    try {
+        return zAgent.parse(await res.json());
+    } catch {
+        zAgentPublic.parse(await res.json());
+    }
+    return { error: 'Failed to parse agent' };
 }
 
 interface GetAgentsOptions {
@@ -25,14 +32,20 @@ export async function getAgents(options: GetAgentsOptions): Promise<AgentPublic[
             searchParams.push([key, value]);
         }
     });
-    return await get(path, searchParams);
+    const res = await get(path, searchParams);
+    if (!res.ok) return await res.json();
+    return zAgentPublic.array().parse(await res.json());
 }
 
 export async function createAgent(agent: AgentCreate): Promise<Agent | ErrorResponse> {
-    return await post(path, agent);
+    const res = await post(path, agent);
+    if (!res.ok) return await res.json();
+    return zAgent.parse(await res.json());
 }
 
 export async function updateAgent(id: string, agent: AgentCreate): Promise<Agent | ErrorResponse> {
-    return await post(`${path}/${id}`, agent);
+    const res = await post(`${path}/${id}`, agent);
+    if (!res.ok) return await res.json();
+    return zAgent.parse(await res.json());
 }
 
