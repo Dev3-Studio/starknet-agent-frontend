@@ -12,20 +12,8 @@ import { useAtom } from 'jotai/index';
 import { dialogOpenAtom } from '@/WalletConnectButton';
 import { getAgents } from '@/actions/agents';
 import { useQuery } from '@tanstack/react-query';
-
-interface AgentCardProps {
-    name: string;
-    creator: string;
-    description: string;
-    image: string;
-    numChats?: number;
-    tags?: string[];
-}
-const agents: AgentCardProps[] = [
-    { creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Astra" },
-    { creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Breach" },
-    { creator: "Riot Games", description: "Tagline of ai agent here", image: "https://placehold.co/150", name: "Brimstone" },
-]
+import puzzle from '@/public/puzzle.png';
+import computer from '@/public/computer.jpg';
 
 export default function Home({
     searchParams,
@@ -36,7 +24,7 @@ export default function Home({
     const popularAgents = useQuery({
         queryKey: ['popularAgents'],
         queryFn: async () => {
-            const res = await getAgents({ limit: 5, sort: 'chats', order: 'desc' });
+            const res = await getAgents({ limit: 6, sort: 'chats', order: 'desc' });
             if ('error' in res) return [];
             return res;
         },
@@ -84,9 +72,11 @@ export default function Home({
                 </div>
                 <div className="flex justify-center">
                     <HorizontalScroll>
-                        <AgentWithSuggestions name="" creator="" description="" image="" />
-                        <AgentWithSuggestions name="" creator="" description="" image="" />
-                        <AgentWithSuggestions name="" creator="" description="" image="" />
+                        {/*todo diff query for these*/}
+                        {popularAgents.data && popularAgents.data.map((agent, index) => (
+                            <AgentWithSuggestions key={index} {...agent} />
+                        ))
+                        }
                     </HorizontalScroll>
                 </div>
             </section>
@@ -115,7 +105,7 @@ export default function Home({
                         </Card>
 
                         <Card className="w-[20rem] shrink-0 p-4">
-                            <Image className="w-full aspect-video" src={code} alt="Code" />
+                            <Image className="w-full aspect-video object-cover" src={computer} alt="Code" />
                             <CardHeader className="text-foreground text-xl pb-2 pt-4">
                                 Teach your processes
                             </CardHeader>
@@ -125,7 +115,7 @@ export default function Home({
                         </Card>
 
                         <Card className="w-[20rem] shrink-0 p-4">
-                            <Image className="w-full aspect-video" src={code} alt="Code" />
+                            <Image className="w-full aspect-video object-cover" src={puzzle} alt="Code" />
                             <CardHeader className="text-foreground text-xl pb-2 pt-4">
                                 Guide your AI Agents skills
                             </CardHeader>

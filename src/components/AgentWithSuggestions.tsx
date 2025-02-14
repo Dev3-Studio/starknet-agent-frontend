@@ -1,8 +1,9 @@
-import { AgentCardProps } from '@/AgentCard';
 import { MessageSquare } from 'lucide-react';
 import { Button } from '@/ui/button';
 import { useRouter } from 'next/navigation';
 import { AgentPublic } from '@/lib/dto';
+import { formatAddress } from '@/lib/utils';
+import Image from 'next/image';
 
 
 const messageSuggestions = [
@@ -21,14 +22,22 @@ export default function AgentWithSuggestions(props: AgentPublic){
         <div className="rounded-2xl border-accent border-2 py-10 px-10 w-[30rem] min-w-[30rem] bg-muted">
             
             <div className="flex w-fit mx-auto">
-                <img className="w-20 rounded-2xl" src="https://placehold.co/150" alt="Agent" />
+                <Image
+                    className="w-20 h-full object-cover rounded-xl mr-4 aspect-square"
+                    src={props.image}
+                    alt="avatar"
+                    
+                    width={1000}
+                    height={1000}
+                
+                />
                 <div className="my-auto ml-4">
-                    <h3>Ai Agent Name</h3>
+                    <h3>{props.name}</h3>
                     <div className="flex gap-2 text-muted-foreground">
-                        <p>By @Usercreator</p>
+                        <p>By {formatAddress(props.creator.walletAddress)}</p>
                         <div className="flex">
                             <MessageSquare className="size-4 my-auto mr-1" />
-                            2.5m
+                            {props.totalMessages}
                         </div>
                     </div>
                 </div>
