@@ -34,7 +34,7 @@ export default function HeroSearch() {
 
                 
                 <Input
-                    className="placeholder:text-foreground placeholder:font-light focus-visible:ring-0 border-0 my-1"
+                    className="placeholder:text-foreground placeholder:font-light focus-visible:ring-0 border-0 my-1 text-xs sm:text-base"
                     placeholder="Search for any agent service.."
                     value={query}
                     onChange={(e) => {

@@ -9,6 +9,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import AgentIcon from '@/AgentIcon';
 import { useQuery } from '@tanstack/react-query';
 import { getChats } from '@/actions/chats';
+import CreditsModal from '@/CreditsModal';
 
 export default function FixedSidebar() {
     const { toggleSidebar, open } = useSidebar();
@@ -60,6 +61,7 @@ export default function FixedSidebar() {
                 <Separator className="w-full h-[2px] bg-accent"/>
                 
                 <Plus className="size-12 rounded-full bg-background border-foreground border cursor-pointer" onClick={()=> router.push('/forge-agent')}/>
+                <CreditsModal  />
                 
                 <Separator className="w-full h-[2px] bg-accent"/>
             </div>
