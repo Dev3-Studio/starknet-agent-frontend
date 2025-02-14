@@ -1,0 +1,1 @@
+export const categories = ["Virtual Assistant", "Design and Creativty", "Digital Marketing", "Sales and Customer Service", "Finance and Accounting", "Human Resources", "Legal", "Healthcare", "Real Estate", "Education", "Software Development", "Data Science", "Product Management", "Project Management", "Business Development", "Operations", "Other"]

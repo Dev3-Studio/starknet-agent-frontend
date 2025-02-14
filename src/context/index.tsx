@@ -7,6 +7,7 @@ import { Toaster } from '@/ui/toaster';
 import StarknetProvider from '@/StarknetProvider';
 import { SidebarProvider } from '@/ui/sidebar';
 import { SessionProvider } from 'next-auth/react';
+import { TooltipProvider } from '@/ui/tooltip';
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,9 @@ export default function Providers({ children }: Readonly<{ children: React.React
                 <SessionProvider>
                     <StarknetProvider>
                         <SidebarProvider>
-                            {children}
+                            <TooltipProvider>
+                                {children}
+                            </TooltipProvider>
                         </SidebarProvider>
                         <Toaster/>
                     </StarknetProvider>
