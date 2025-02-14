@@ -74,7 +74,11 @@ export default function WalletConnectButton() {
             >
                 {status === 'authenticated' ? 'Log Out' : 'Connect Wallet'}
             </Button>
-            <ProviderSelectDialog open={isOpen.open} setOpen={()=>setIsOpen({open: true})} />
+            <ProviderSelectDialog open={isOpen.open} setOpen={()=> {
+                // if we are logging out, redirect to home else no redirect
+                const redirect = status === "authenticated" ? '/' : undefined;
+                setIsOpen({ open: true, redirect });
+            }} />
         </div>
     );
 }

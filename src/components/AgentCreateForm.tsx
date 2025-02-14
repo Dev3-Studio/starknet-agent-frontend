@@ -36,6 +36,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/ui/tooltip';
 import getPresignedUrl from '@/actions/getPresignedUrl';
 import { v4 as uuidv4 } from 'uuid';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { toast } from '@/ui/use-toast';
 
 const zJsonTemplate = z.string().refine(
     (value) => {
@@ -173,16 +174,12 @@ export default function AgentCreateForm() {
     
     async function onSubmit(values: AgentForm) {
         
-        let fileUrl = '';
+        let fileUrl = 'https://agentforge.dev3.studio/agent-forge/';
         if (values.image){
-            fileUrl = await uploadFile(values.image);
+            fileUrl = fileUrl + await uploadFile(values.image);
         } else {
-            // todo use default image if no image is provided
+            fileUrl = fileUrl + 'defaultAvatar.jpg';
         }
-        
-        
-        console.log(fileUrl);
-        
         
         const tools = values.tools.map((tool) => ({
             ...tool,
@@ -193,8 +190,18 @@ export default function AgentCreateForm() {
             bodyTemplate: JSON.parse(tool.bodyTemplate),
         }));
         
+        const res = await createAgent({ ...values, image: fileUrl, tools });
         
-        await createAgent({ ...values, image: fileUrl, tools });
+        if ("error" in res) {
+            console.error(res.error);
+            toast(
+                {
+                    title: "Error",
+                    description: res.error,
+                    variant: "destructive",
+                }
+            )
+        }
     }
     
     // react hook form
@@ -202,8 +209,6 @@ export default function AgentCreateForm() {
         control: form.control,
         name: 'tools',
     });
-    
-
     
     
     // upload image stuff
@@ -242,8 +247,6 @@ export default function AgentCreateForm() {
                 <form onSubmit={form.handleSubmit(onSubmit, (e) => {
                     console.error(e);
                 })} className="space-y-8">
-                    
-                    
                     
                     <FormField
                         control={form.control}
@@ -340,8 +343,6 @@ export default function AgentCreateForm() {
                         )}
                     />
                     
-                    
-                    
                     <FormField
                         control={form.control}
                         name="tagline"
@@ -355,7 +356,6 @@ export default function AgentCreateForm() {
                             </FormItem>
                         )}
                     />
-                    
                     
                     <FormField
                         control={form.control}
@@ -426,9 +426,6 @@ export default function AgentCreateForm() {
                             </FormItem>
                         )}
                     />
-                    
-                    
-                    
                     
                     <div>
                         <FormLabel>Rules</FormLabel>
@@ -751,7 +748,6 @@ export default function AgentCreateForm() {
                             </FormItem>
                         )}
                     />
-                    
                     
                     <Button type="submit">Create Agent</Button>
                 </form>

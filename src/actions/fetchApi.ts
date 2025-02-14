@@ -1,8 +1,8 @@
 'use server';
 
 import { Json } from '@/lib/dto';
-import { getServerSession } from 'next-auth';
 import jwt from 'jsonwebtoken';
+import { auth } from '@/config/auth';
 
 function signJwt(address: string) {
     if (!process.env.NEXTAUTH_SECRET) {
@@ -12,7 +12,7 @@ function signJwt(address: string) {
 }
 
 async function getAuthHeader() {
-    const session = await getServerSession();
+    const session = await auth();
     if (session?.user.address) {
         return `Bearer ${signJwt(session.user.address)}`;
     }
@@ -42,6 +42,8 @@ export async function get(path: string, params?: ConstructorParameters<typeof UR
 }
 
 export async function post(path: string, body?: Json) {
+    const header = await getAuthHeader();
+    console.log(header);
     const baseUrl = new URL(getBaseUrl());
     baseUrl.pathname = path;
     return await fetch(baseUrl.toString(), {
