@@ -4,7 +4,8 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
-    SidebarHeader, SidebarTrigger, useSidebar,
+    SidebarHeader,
+    useSidebar,
 } from '@/components/ui/sidebar';
 import SearchBar from '@/SearchBar';
 import UserInfo from '@/UserInfo';
@@ -12,10 +13,12 @@ import { Button } from '@/ui/button';
 import { ArrowLeftToLine } from 'lucide-react';
 import ChatHistory from '@/ChatHistory';
 import RecentAICard from '@/RecentAICard';
-import { LLMModel } from '@/lib/types';
 import HorizontalScroll from '@/HorizontalScroll';
+import { usePathname } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getChat, getChats } from '@/actions/chats';
 
-const placehodlderAIs: LLMModel[] = [
+const placehodlderAIs = [
     {
         name: 'Map AI',
         description: 'AI that generates maps based on user input',
@@ -41,6 +44,23 @@ const placehodlderAIs: LLMModel[] = [
 
 export function AppSidebar() {
     const { toggleSidebar } = useSidebar();
+    const pathname = usePathname();
+    const { data: currentChat } = useQuery({
+        queryKey: ['agent', pathname],
+        queryFn: async () => {
+            const regex = /\/chat\/(.*)/;
+            const match = pathname.match(regex);
+            if (!match) return null;
+            return await getChat(match[1]);
+        }
+    });
+    const { data: recentChats } = useQuery({
+        queryKey: ['recentChats'],
+        queryFn: async () => {
+            return await getChats({ order: 'desc' });
+        }
+    });
+    
     return (
         <Sidebar side="left" className="h-full">
             <SidebarHeader className="flex flex-row items-center">
