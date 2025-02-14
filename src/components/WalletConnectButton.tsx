@@ -21,7 +21,6 @@ import { getMessageTypedData } from '@/lib/getMessageTypedData';
 import { stark } from 'starknet';
 import formatCSRF from '@/lib/formatCSRF';
 
-
 type Provider = {
     id: string
     name: string
@@ -138,7 +137,7 @@ export function ProviderSelectDialog({
     
     if (isDesktop) {
         return (
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={isOpen.open} onOpenChange={() => setIsOpen({ open: false})}>
                 <DialogContent className="bg-primary max-h-[40rem] max-w-[80vw] w-fit">
                     <div className="flex p-2">
                         <div className="pr-8 w-[20rem]">
