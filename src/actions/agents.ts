@@ -16,7 +16,7 @@ export async function getAgent(id: string): Promise<Agent | AgentPublic | ErrorR
     return { error: 'Failed to parse agent' };
 }
 
-interface GetAgentsOptions {
+export interface GetAgentsOptions {
     tags?: string[];
     limit?: number;
     creator?: string;

@@ -2,7 +2,7 @@
 const nextConfig = {
     
     images: {
-        domains: ['agentforge.dev3.studio', 'via.placeholder.com'],
+        domains: ['agentforge.dev3.studio', 'via.placeholder.com', 'placehold.co'],
     },
     
     

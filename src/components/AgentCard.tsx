@@ -3,7 +3,8 @@ import { Card } from '@/ui/card';
 import { MessageSquare } from 'lucide-react';
 import { AgentPublic } from '@/lib/dto';
 import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { formatAddress } from '@/lib/utils';
 
 export interface AgentCardProps {
     name: string;
@@ -35,11 +36,11 @@ export default function AgentCard(props: AgentPublic) {
             
             <div className="flex flex-col gap-1">
                 <h1 className="text-2xl">{props.name}</h1>
-                <p className="text-sm text-muted-foreground">By: {props.creator.walletAddress}</p>
+                <p className="text-sm text-muted-foreground">By: {formatAddress(props.creator.walletAddress)}</p>
                 <p className="my-2 text-xs">{props.tagline}</p>
                 <div className="flex">
                     <MessageSquare className="size-4 my-auto mr-1" />
-                    2.5m
+                    {props.totalMessages}
                 </div>
                 <div className="bg-primary rounded-2xl w-fit px-2 text-xs text-white">
                     {props.tags && props.tags[0]}
