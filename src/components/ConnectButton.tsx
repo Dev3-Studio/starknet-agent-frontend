@@ -1,32 +1,31 @@
 'use client';
-import { atom } from 'jotai';
-export const dialogOpenAtom = atom<{open: boolean, redirect?:string}>({ open: false });
 
 import * as React from 'react';
-import { useAtom } from 'jotai';
 import { Button } from '@/components/ui/button';
-import { Connector, useAccount } from '@starknet-react/core';
-import { useSession, signOut, getCsrfToken, signIn } from 'next-auth/react';
+import { Connector, useAccount, useConnect } from '@starknet-react/core';
 import useMediaQuery from '@/hooks/use-media-query';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
-import { useConnect, useSignTypedData } from '@starknet-react/core';
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+} from '@/components/ui/drawer';
 import Image, { StaticImageData } from 'next/image';
 import loginImage from '@/public/loginImage.png';
 import argent from '@/public/wallet-providers/argent.png';
 import bravos from '@/public/wallet-providers/braavos.webp';
 import { useToast } from '@/ui/use-toast';
 import checkAddressDeployed from '@/actions/checkAddressDeployed';
-import { getMessageTypedData } from '@/lib/getMessageTypedData';
-import { stark } from 'starknet';
-import formatCSRF from '@/lib/formatCSRF';
-
+import { useState } from 'react';
 
 type Provider = {
-    id: string
-    name: string
-    icon: StaticImageData
-}
+    id: string;
+    name: string;
+    icon: StaticImageData;
+};
 
 const providers: Provider[] = [
     {
@@ -51,40 +50,26 @@ const providers: Provider[] = [
     },
 ] as const;
 
-export default function WalletConnectButton() {
-    const [isOpen, setIsOpen] = useAtom(dialogOpenAtom);
-    const { status } = useSession();
+export default function ConnectButton() {
+    const [open, setOpen] = useState(false);
     
     function handleClick() {
-        if (status === 'authenticated') {
-            signOut({ redirect: false }).catch();
-        } else {
-            signOut({ redirect: false }).catch();
-            setIsOpen({ open: true });
-        }
+        setOpen(true);
     }
     
     return (
         <div>
-            <Button
-                className="text-foreground"
-                onClick={handleClick}
-            >
-                {status === 'authenticated' ? 'Log Out' : 'Connect Wallet'}
+            <Button className="py-8 px-10 mt-3 text-2xl" onClick={handleClick}>
+                Connect Wallet
             </Button>
-            <ProviderSelectDialog open={isOpen.open} setOpen={()=> {
-                // if we are logging out, redirect to home else no redirect
-                const redirect = status === "authenticated" ? '/' : undefined;
-                setIsOpen({ open: true, redirect });
-            }} />
+            <ProviderSelectDialog open={open} setOpen={setOpen} />
         </div>
     );
 }
 
-
-export function ProviderSelectDialog({
+function ProviderSelectDialog({
     open,
-    setOpen
+    setOpen,
 }: {
     open: boolean;
     setOpen: (open: boolean) => void;
@@ -92,48 +77,30 @@ export function ProviderSelectDialog({
     const isDesktop = useMediaQuery('(min-width: 768px)');
     const { connect, connectors } = useConnect();
     const { address } = useAccount();
-    const { signTypedDataAsync } = useSignTypedData({});
     const { toast } = useToast();
-    const [isOpen, setIsOpen] = useAtom(dialogOpenAtom);
     
-    const getConnectorById = (id: string) => connectors.find(connector => connector.id === id);
+    const getConnectorById = (id: string) =>
+        connectors.find((connector) => connector.id === id);
     
     async function handleConnect(connector: Connector) {
-        connect({ connector });
+        await connect({ connector }); // Await the connect function
         if (!address) return;
+        
         setOpen(false);
         const isDeployed = await checkAddressDeployed(address);
+        
         if (!isDeployed) {
             return toast({
                 title: 'Address not deployed',
                 description: 'Deploy your address by performing a transaction',
-                variant: 'destructive'
+                variant: 'destructive',
             });
         }
         
-        const token = await getCsrfToken();
-        if (!token) return;
-        const typedData = getMessageTypedData(formatCSRF(token));
-        const signature = await signTypedDataAsync(typedData);
-        const res = await signIn('starknet', {
-            signature: JSON.stringify(stark.formatSignature(signature)),
-            address, redirect: !(isOpen.redirect === undefined), callbackUrl: isOpen.redirect,
+        toast({
+            title: 'Successfully connected',
+            description: 'You have successfully connected your wallet',
         });
-        
-        if (res && res.error) toast({
-            title: 'Failed to connect',
-            description: 'Failed to connect your wallet',
-            variant: 'destructive'
-        });
-        
-        if (res && res.ok) {
-            toast({
-                title: 'Successfully connected',
-                description: 'You have successfully connected your wallet',
-            });
-            setIsOpen({ open: false, redirect: "/" });
-        }
-        
     }
     
     if (isDesktop) {
@@ -168,9 +135,7 @@ export function ProviderSelectDialog({
                                                     alt={provider.name}
                                                 />
                                             </div>
-                                            <p className="w-full text-center">
-                                                {provider.name}
-                                            </p>
+                                            <p className="w-full text-center">{provider.name}</p>
                                         </Button>
                                     );
                                 })}
@@ -204,15 +169,15 @@ export function ProviderSelectDialog({
                                         alt={provider.name}
                                     />
                                 </div>
-                                <p className="w-full text-center">
-                                    {provider.name}
-                                </p>
+                                <p className="w-full text-center">{provider.name}</p>
                             </Button>
                         );
                     })}
                 </div>
                 <DrawerFooter className="pt-2 pb-8">
-                    <Button variant="outline" onClick={() => setIsOpen({ open:false  })}>Cancel</Button>
+                    <DrawerClose asChild>
+                        <Button>Cancel</Button>
+                    </DrawerClose>
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>

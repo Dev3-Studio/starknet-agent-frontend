@@ -22,7 +22,7 @@ export default function Providers({ children }: Readonly<{ children: React.React
             >
                 <SessionProvider>
                     <StarknetProvider>
-                        <SidebarProvider>
+                        <SidebarProvider defaultOpen={false}>
                             <TooltipProvider>
                                 {children}
                             </TooltipProvider>

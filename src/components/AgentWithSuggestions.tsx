@@ -15,7 +15,7 @@ export default function AgentWithSuggestions(props: AgentPublic){
     const router = useRouter();
     
     function handleClick(message: string) {
-        router.push(`/chat/?agentId=${props.id}?message=${message}`);
+        router.push(`/chat/?agentId=${props.id}&message=${message}`);
     }
     
     return(
