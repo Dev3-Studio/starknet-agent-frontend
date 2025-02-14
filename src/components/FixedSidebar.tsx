@@ -2,7 +2,7 @@
 
 import Logo from '@/public/logo.svg';
 import { useSidebar } from '@/ui/sidebar';
-import { ArrowLeftToLine, ArrowRightToLine, Bookmark, Compass, Plus } from 'lucide-react';
+import { ArrowLeftToLine, ArrowRightToLine, Bookmark, CircleUser, Compass, Plus } from 'lucide-react';
 import { Button } from '@/ui/button';
 import { Separator } from '@/ui/separator';
 import { usePathname, useRouter } from 'next/navigation';
@@ -59,8 +59,7 @@ export default function FixedSidebar() {
             <div className="flex flex-col items-center gap-4 px-3">
                 <Separator className="w-full h-[2px] bg-accent"/>
                 
-                <Plus className="size-8 rounded-full bg-background border-foreground border cursor-pointer" onClick={()=> router.push('/forge-agent')}/>
-                <Bookmark className="size-8 fill-foreground cursor-pointer"/>
+                <Plus className="size-12 rounded-full bg-background border-foreground border cursor-pointer" onClick={()=> router.push('/forge-agent')}/>
                 
                 <Separator className="w-full h-[2px] bg-accent"/>
             </div>

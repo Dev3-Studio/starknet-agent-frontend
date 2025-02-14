@@ -14,35 +14,13 @@ import { ArrowLeftToLine } from 'lucide-react';
 import ChatHistory from '@/ChatHistory';
 import RecentAICard from '@/RecentAICard';
 import HorizontalScroll from '@/HorizontalScroll';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getChat, getChats } from '@/actions/chats';
 
-const placehodlderAIs = [
-    {
-        name: 'Map AI',
-        description: 'AI that generates maps based on user input',
-        image: 'https://placehold.co/150',
-        creator: 'Shadcn',
-        tagline: 'Generate maps from text',
-    },
-    {
-        name: 'Chat AI',
-        description: 'AI that generates chat messages based on user input',
-        image: 'https://placehold.co/150',
-        creator: 'Shadcn',
-        tagline: 'Generate chat messages from text',
-    },
-    {
-        name: 'Code AI',
-        description: 'AI that generates code based on user input',
-        image: 'https://placehold.co/150',
-        creator: 'Shadcn',
-        tagline: 'Generate code from text',
-    }
-]
 
 export function AppSidebar() {
+    const router = useRouter();
     const { toggleSidebar } = useSidebar();
     const pathname = usePathname();
     const { data: currentChat } = useQuery({
@@ -61,6 +39,8 @@ export function AppSidebar() {
         }
     });
     
+    if (recentChats && 'error' in recentChats) return router.push('/?error=unauthorized')
+    
     return (
         <Sidebar side="left" className="h-full">
             <SidebarHeader className="flex flex-row items-center">
@@ -70,19 +50,19 @@ export function AppSidebar() {
                 </Button>
             </SidebarHeader>
             <SidebarContent>
-                <SidebarGroup>
+                {recentChats && <SidebarGroup>
                     <h3 className="text-muted-foreground mb-2">Recently Used</h3>
                     <HorizontalScroll>
-                    {placehodlderAIs.map((ai, key) => {
-                        return <RecentAICard key={key} {...ai}/>
-                    })}
+                        {recentChats.map((ai, key) => {
+                            return <RecentAICard key={key} {...ai}/>;
+                        })}
                     </HorizontalScroll>
-                    
-                </SidebarGroup>
-                <SidebarGroup>
+                
+                </SidebarGroup>}
+                {recentChats && <SidebarGroup>
                     <h3 className="text-muted-foreground mb-2">Chat History</h3>
-                    <ChatHistory/>
-                </SidebarGroup>
+                    <ChatHistory {...recentChats}/>
+                </SidebarGroup>}
             </SidebarContent>
             
             <SidebarFooter className="p-0">

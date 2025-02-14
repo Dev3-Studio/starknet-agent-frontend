@@ -1,8 +1,19 @@
 import IconCoin from '@/public/iconCoin.svg';
 import { Input } from '@/ui/input';
 import { Button } from '@/ui/button';
+import { auth } from '@/config/auth';
+import { getUser } from '@/actions/users';
+import { redirect } from 'next/navigation';
 
-export default function Credits(){
+export default async function Credits(){
+    
+    const session = await auth();
+    const user = await getUser(session!.user.address);
+    
+    if ('error' in user) {
+        redirect('/?error=unauthorized');
+    }
+    
     
     return(
         <div className="flex flex-col items-center justify-center">
@@ -15,7 +26,7 @@ export default function Credits(){
                         <IconCoin alt='Coin Icon'/>
                     
                     </div>
-                    <p className='font-mono ml-2 text-2xl'>999</p>
+                    <p className='font-mono ml-2 text-2xl'>{user.credits}</p>
                 </div>
                 
                 {/*amount*/}
@@ -28,10 +39,10 @@ export default function Credits(){
                 </div>
                 
                 {/*network and fees*/}
-                <div className='flex justify-between rounded-3xl w-full px-4 p-2 xl:px-8 xl:py-3 mb-5'>
-                    <p className='text-white font-regular text-center'>Est total fees: $2.96</p>
+                {/*<div className='flex justify-between rounded-3xl w-full px-4 p-2 xl:px-8 xl:py-3 mb-5'>*/}
+                {/*    <p className='text-white font-regular text-center'>Est total fees: $2.96</p>*/}
                 
-                </div>
+                {/*</div>*/}
                 
                 <Button className='py-3 px-6 mt-3'>Buy Credits</Button>
             </div>
