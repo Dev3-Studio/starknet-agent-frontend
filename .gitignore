@@ -26,7 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env
 
 # vercel
 .vercel
@@ -34,8 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/.env
-
-# IDE
-/.vscode
-/.idea
+/public/oembed.json
+/public/robots.txt
+/public/sitemap.xml
+/public/sitemap-0.xml
