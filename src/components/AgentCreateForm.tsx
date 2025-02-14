@@ -111,6 +111,8 @@ type AgentForm = z.infer<typeof zAgentForm>;
 
 export default function AgentCreateForm() {
     
+    const buttonRef = React.useRef<HTMLButtonElement>(null);
+    
     const form = useForm<AgentForm>({
         resolver: zodResolver(zAgentForm),
         defaultValues: {
@@ -171,6 +173,10 @@ export default function AgentCreateForm() {
     }
     
     async function onSubmit(values: AgentForm) {
+        // disable submit button
+        buttonRef.current?.setAttribute('disabled', 'true');
+        
+        
         
         let fileUrl = 'https://agentforge.dev3.studio/agent-forge/';
         if (values.image){
@@ -199,7 +205,19 @@ export default function AgentCreateForm() {
                     variant: "destructive",
                 }
             )
+        } else {
+            toast({
+                title: "Success",
+                description: "Agent created successfully",
+            })
+            
+            // clear form
+            form.reset();
         }
+        
+        
+        
+        
     }
     
     // react hook form
@@ -879,7 +897,7 @@ export default function AgentCreateForm() {
                         )}
                     />
                     
-                    <Button type="submit">Create Agent</Button>
+                    <Button type="submit" ref={buttonRef}>Create Agent</Button>
                 </form>
             </Form>
         </div>
