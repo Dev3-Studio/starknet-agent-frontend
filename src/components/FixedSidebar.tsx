@@ -80,7 +80,6 @@ export default function FixedSidebar() {
             <div className="bg-background w-full flex justify-center h-20">
                 <Compass className="size-14 bg-muted rounded-full p-1 cursor-pointer my-auto"
                          onClick={() => router.push('/user')}
-                
                 />
             </div>
         </div>

@@ -35,8 +35,8 @@ import Ajv from 'ajv';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/ui/tooltip';
 import getPresignedUrl from '@/actions/getPresignedUrl';
 import { v4 as uuidv4 } from 'uuid';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { toast } from '@/ui/use-toast';
+import { AutosizeTextarea } from '@/ui/autoresizetextarea';
 
 const zJsonTemplate = z.string().refine(
     (value) => {
@@ -123,7 +123,7 @@ export default function AgentCreateForm() {
             directive: '',
             tags: [],
             rules: [''],
-       
+            
         },
     });
     
@@ -131,9 +131,9 @@ export default function AgentCreateForm() {
         key: z.string(),
         value: z.string(),
     }).array();
-
+    
     const zRecordSchema = z.record(z.string(), z.string());
-
+    
     type RecordTemplate = z.infer<typeof zRecordTemplate>;
     type RecordSchema = z.infer<typeof zRecordSchema>;
     
@@ -241,7 +241,7 @@ export default function AgentCreateForm() {
     
     return (
         <div className="">
-            <h1 className="font-bold text-3xl mb-9">Forge your Agent</h1>
+            <h1 className="font-bold text-5xl mb-9 text-center">Forge your Agent</h1>
             
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit, (e) => {
@@ -321,9 +321,17 @@ export default function AgentCreateForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Agent name" {...field} />
-                                </FormControl>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <FormControl>
+                                            <Input placeholder="Bob the Builder" {...field} />
+                                        </FormControl>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>The name of your agent.  This will be displayed to users.</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                                
                                 <FormMessage/>
                             </FormItem>
                         )}
@@ -335,9 +343,16 @@ export default function AgentCreateForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Description</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Agent description" {...field} />
-                                </FormControl>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <FormControl>
+                                            <Textarea placeholder="Bob is a friendly builder who can help you build things." {...field} />
+                                        </FormControl>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>A description of your agent.  This will be displayed to users.</p>
+                                    </TooltipContent>
+                                </Tooltip>
                                 <FormMessage/>
                             </FormItem>
                         )}
@@ -349,9 +364,16 @@ export default function AgentCreateForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Tagline</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Short tagline (max 32 chars)" {...field} />
-                                </FormControl>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <FormControl>
+                                            <Input placeholder="I build things!" {...field} />
+                                        </FormControl>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>A short tagline for your agent (max 32 chars). This is displayed on the agent card.</p>
+                                    </TooltipContent>
+                                </Tooltip>
                                 <FormMessage/>
                             </FormItem>
                         )}
@@ -363,23 +385,30 @@ export default function AgentCreateForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Category</FormLabel>
-                                <FormControl>
-                                    <Select onValueChange={(value) => field.onChange([value])}>
-                                        <SelectTrigger className="w-80">
-                                            <SelectValue placeholder="Category"/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {
-                                                categories.map((category) => (
-                                                    <SelectItem key={category} value={category}>
-                                                        {category}
-                                                    </SelectItem>
-                                                ))
-                                            }
-                                        </SelectContent>
-                                    </Select>
-                                
-                                </FormControl>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <FormControl>
+                                            <Select onValueChange={(value) => field.onChange([value])}>
+                                                <SelectTrigger className="w-80">
+                                                    <SelectValue placeholder="Select a category"/>
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {
+                                                        categories.map((category) => (
+                                                            <SelectItem key={category} value={category}>
+                                                                {category}
+                                                            </SelectItem>
+                                                        ))
+                                                    }
+                                                </SelectContent>
+                                            </Select>
+                                        
+                                        </FormControl>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Choose a category that best describes your agent.</p>
+                                    </TooltipContent>
+                                </Tooltip>
                                 <FormDescription>
                                     To what category does your agent belong?
                                 </FormDescription>
@@ -405,9 +434,16 @@ export default function AgentCreateForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Biography</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Agent biography" {...field} />
-                                </FormControl>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <FormControl>
+                                            <Textarea placeholder="Bob is a master builder with 20 years of experience. He is a friendly and helpful person who loves to build things." {...field} />
+                                        </FormControl>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Describe your agent's background and personality.  This is provided to the agent.</p>
+                                    </TooltipContent>
+                                </Tooltip>
                                 <FormMessage/>
                             </FormItem>
                         )}
@@ -419,9 +455,16 @@ export default function AgentCreateForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Directive</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Agent directive" {...field} />
-                                </FormControl>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <FormControl>
+                                            <Textarea placeholder="Help users build things by providing instructions and advice." {...field} />
+                                        </FormControl>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>What is the primary goal or purpose of your agent?  This is provided to the agent.</p>
+                                    </TooltipContent>
+                                </Tooltip>
                                 <FormMessage/>
                             </FormItem>
                         )}
@@ -429,6 +472,10 @@ export default function AgentCreateForm() {
                     
                     <div>
                         <FormLabel>Rules</FormLabel>
+                        <Tooltip>
+                            <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
+                            <TooltipContent><p>These are specific rules your agent MUST follow. They're given to the agent, make them short and clear. Add multiple rules if necessary.</p></TooltipContent>
+                        </Tooltip>
                         {form.watch('rules')?.map((_, index) => (
                             <FormField
                                 key={index}
@@ -438,7 +485,7 @@ export default function AgentCreateForm() {
                                     <FormItem>
                                         <FormControl>
                                             <div className="flex gap-2 mt-2">
-                                                <Input placeholder={`Rule ${index + 1}`} {...field} />
+                                                <Input placeholder={`Never give financial advice.`} {...field} />
                                                 <Button
                                                     type="button"
                                                     variant="outline"
@@ -472,6 +519,10 @@ export default function AgentCreateForm() {
                     }
                     <div className="space-y-4">
                         <FormLabel>Tools</FormLabel>
+                        <Tooltip>
+                            <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
+                            <TooltipContent><p>Tools allow your agent to interact with external APIs. Define how your agent will use these tools.</p></TooltipContent>
+                        </Tooltip>
                         {toolFields.map((field, index) => (
                             <Card key={field.id}>
                                 <CardContent className="pt-6 space-y-4">
@@ -482,9 +533,14 @@ export default function AgentCreateForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Tool Name</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Tool name" {...field} />
-                                                </FormControl>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <FormControl>
+                                                            <Input placeholder="search_google" {...field} />
+                                                        </FormControl>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent><p>A short, descriptive name for the tool ('search_google').  This will be used internally by the agent.</p></TooltipContent>
+                                                </Tooltip>
                                                 <FormMessage/>
                                             </FormItem>
                                         )}
@@ -497,9 +553,14 @@ export default function AgentCreateForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Description</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Tool description" {...field} />
-                                                </FormControl>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <FormControl>
+                                                            <Input placeholder="Searches Google for information." {...field} />
+                                                        </FormControl>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent><p>A description of what the tool does.  This is provided to the agent.</p></TooltipContent>
+                                                </Tooltip>
                                                 <FormMessage/>
                                             </FormItem>
                                         )}
@@ -512,9 +573,22 @@ export default function AgentCreateForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Arguments Schema</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Arguments schema" {...field} />
-                                                </FormControl>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <FormControl>
+                                                            <Textarea
+                                                                
+                                                                placeholder={JSON.stringify({"type": "object", "properties": {"query": {"type": "string", "description": "The search query"}}, "required": ["query"]}, null, 2)}
+                                                                className="font-mono h-72" {...field}
+                                                            />
+                                                        </FormControl>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>
+                                                            A JSON schema defining the arguments this tool accepts.  This uses the <a href="https://json-schema.org/" target="_blank" rel="noopener noreferrer" className="underline">JSON Schema</a> standard.  This example shows a schema for a single "query" string.  Make sure you describe *every* property!
+                                                        </p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                                 <FormMessage/>
                                             </FormItem>
                                         )}
@@ -523,20 +597,29 @@ export default function AgentCreateForm() {
                                     {/* Environment */}
                                     <div>
                                         <FormLabel>Environment Variables</FormLabel>
+                                        <Tooltip>
+                                            <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>
+                                                    Define environment variables for this tool. These are key-value pairs that will be available to the tool.  These are secret, and *are not* provided to the agent prompt. Use this for API keys, etc.
+                                                </p>
+                                            </TooltipContent>
+                                        </Tooltip>
                                         {form.watch(`tools.${index}.environment`)?.map((_, envIndex) => (
                                             <div key={envIndex} className="flex gap-2 mt-2">
                                                 <Input
-                                                    placeholder="Environment key"
+                                                    placeholder="GOOGLE_API_KEY"
                                                     {...form.register(`tools.${index}.environment.${envIndex}.key`)}
                                                 />
                                                 <Input
-                                                    placeholder="Environment value"
+                                                    placeholder="your-secret-api-key"
                                                     {...form.register(`tools.${index}.environment.${envIndex}.value`)}
                                                 />
                                                 <Button
                                                     type="button"
                                                     variant="outline"
                                                     size="icon"
+                                                    className="min-w-8"
                                                     onClick={() => {
                                                         const environments = form.getValues(`tools.${index}.environment`);
                                                         form.setValue(
@@ -572,21 +655,26 @@ export default function AgentCreateForm() {
                                         name={`tools.${index}.method`}
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Method</FormLabel>
-                                                <Select
-                                                    onValueChange={field.onChange}
-                                                    defaultValue={field.value}
-                                                >
-                                                    <FormControl>
-                                                        <SelectTrigger>
-                                                            <SelectValue placeholder="Select method"/>
-                                                        </SelectTrigger>
-                                                    </FormControl>
-                                                    <SelectContent>
-                                                        <SelectItem value="GET">GET</SelectItem>
-                                                        <SelectItem value="POST">POST</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
+                                                <FormLabel>Method Type</FormLabel>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <Select
+                                                            onValueChange={field.onChange}
+                                                            defaultValue={field.value}
+                                                        >
+                                                            <FormControl>
+                                                                <SelectTrigger>
+                                                                    <SelectValue placeholder="Select method"/>
+                                                                </SelectTrigger>
+                                                            </FormControl>
+                                                            <SelectContent>
+                                                                <SelectItem value="GET">GET</SelectItem>
+                                                                <SelectItem value="POST">POST</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent><p>The HTTP method to use for this tool (GET or POST).</p></TooltipContent>
+                                                </Tooltip>
                                                 <FormMessage/>
                                             </FormItem>
                                         )}
@@ -599,9 +687,18 @@ export default function AgentCreateForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>URL Template</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="URL template" {...field} />
-                                                </FormControl>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <FormControl>
+                                                            <Input placeholder="https://www.google.com/search?q={query}" {...field} />
+                                                        </FormControl>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>
+                                                            The URL template for the API endpoint. Use curly braces <code>{`{}`}</code> to denote placeholders for arguments defined in the arguments schema.  For example, if your arguments schema defines a "query" property, you can use <code>{`{query}`}</code> in the URL.
+                                                        </p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                                 <FormMessage/>
                                             </FormItem>
                                         )}
@@ -610,20 +707,25 @@ export default function AgentCreateForm() {
                                     {/* Headers Template */}
                                     <div>
                                         <FormLabel>Headers Template</FormLabel>
+                                        <Tooltip>
+                                            <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
+                                            <TooltipContent><p>Define static headers for the API request. These are key-value pairs.</p></TooltipContent>
+                                        </Tooltip>
                                         {form.watch(`tools.${index}.headersTemplate`)?.map((_, headerIndex) => (
                                             <div key={headerIndex} className="flex gap-2 mt-2">
                                                 <Input
-                                                    placeholder="Header key"
+                                                    placeholder="Content-Type"
                                                     {...form.register(`tools.${index}.headersTemplate.${headerIndex}.key`)}
                                                 />
                                                 <Input
-                                                    placeholder="Header value"
+                                                    placeholder="application/json"
                                                     {...form.register(`tools.${index}.headersTemplate.${headerIndex}.value`)}
                                                 />
                                                 <Button
                                                     type="button"
                                                     variant="outline"
                                                     size="icon"
+                                                    className="min-w-8"
                                                     onClick={() => {
                                                         const headers = form.getValues(`tools.${index}.headersTemplate`);
                                                         form.setValue(
@@ -660,13 +762,22 @@ export default function AgentCreateForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Query Template</FormLabel>
-                                                <FormControl>
-                                                    <Textarea
-                                                        placeholder='Enter JSON template (e.g., {"key": "value"})'
-                                                        className="font-mono h-32"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <FormControl>
+                                                            <Textarea
+                                                                placeholder={JSON.stringify({"query": "{query}"}, null, 2)}
+                                                                className="font-mono h-32"
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>
+                                                            A JSON template for the query parameters of the API request. Use curly braces <code>{`{}`}</code> to denote placeholders for arguments defined in the arguments schema. Any literal JSON values will be sent with *every* request.  Leave empty to send no query parameters.
+                                                        </p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                                 <FormDescription>
                                                     Enter a valid JSON object that will serve as the request query
                                                     template
@@ -683,13 +794,22 @@ export default function AgentCreateForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Body Template</FormLabel>
-                                                <FormControl>
-                                                    <Textarea
-                                                        placeholder='Enter JSON template (e.g., {"key": "value"})'
-                                                        className="font-mono h-32"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
+                                                <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                        <FormControl>
+                                                            <Textarea
+                                                                placeholder={JSON.stringify({"prompt": "{prompt}", "max_tokens": 100}, null, 2)}
+                                                                className="font-mono h-32"
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                        <p>
+                                                            A JSON template for the body of the API request. Use curly braces <code>{`{}`}</code> to denote placeholders for arguments defined in the arguments schema.  Any literal JSON values will be sent with *every* request. Leave empty to send no body.
+                                                        </p>
+                                                    </TooltipContent>
+                                                </Tooltip>
                                                 <FormDescription>
                                                     Enter a valid JSON object that will serve as the request body
                                                     template
@@ -736,11 +856,16 @@ export default function AgentCreateForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Royalty %</FormLabel>
-                                <FormControl>
-                                    <Input type="number" className="w-20" placeholder="5" {...field}
-                                           onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : '')}
-                                    />
-                                </FormControl>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <FormControl>
+                                            <Input type="number" className="w-20" placeholder="5" {...field}
+                                                   onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : '')}
+                                            />
+                                        </FormControl>
+                                    </TooltipTrigger>
+                                    <TooltipContent><p>The percentage of revenue you want to receive for each token generated by your agent.</p></TooltipContent>
+                                </Tooltip>
                                 <FormDescription>
                                     How much do you want to charge users of your agent?
                                 </FormDescription>
