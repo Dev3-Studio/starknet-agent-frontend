@@ -4,17 +4,54 @@ import { Input } from '@/ui/input';
 import { Button } from '@/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/actions/users';
-import { useAccount, useSendTransaction } from '@starknet-react/core';
+import { useContract, useSendTransaction } from '@starknet-react/core';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import { Provider } from 'starknet';
+import { useToast } from '@/ui/use-toast';
+
+const address = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
+const provider = new Provider({
+    // @ts-ignore
+    chainId: process.env.NEXT_PUBLIC_CHAIN_ID,
+    nodeUrl: process.env.NEXT_PUBLIC_NODE_URL,
+})
 
 export default function Credits() {
+    const { toast } = useToast();
     
     const router = useRouter();
     // fetch user info
     const session = useSession();
     const [numCredits, setNumCredits] = useState(0);
+    
+    
+    const abi = useQuery({
+        queryKey: ['abi'],
+        queryFn: async () => {
+            const { abi } = await provider.getClassAt(address);
+            if (!abi) {
+                throw new Error('No ABI found for contract');
+            }
+            return abi;
+        },
+    });
+    
+    const contract = useContract({
+        address,
+        abi: abi.data,
+    });
+    
+    
+    
+    const { error, sendAsync } = useSendTransaction({
+        calls:
+            contract.contract && address
+                ? [contract.contract.populate("credit", [address, BigInt(numCredits)])]
+                : undefined,
+    });
+    
     
     const user = useQuery({
         queryKey: ['user'],
@@ -37,13 +74,24 @@ export default function Credits() {
         return null;
     }
     
-    
-    // const tx = useSendTransaction();
-    
     async function buyCredits() {
-    
-    
-    
+        if (!sendAsync) return;
+        
+        await sendAsync();
+        
+        if (error) {
+            toast({
+                title: "Error buying credits",
+                description: error.message,
+                variant: 'destructive',
+            });
+            return;
+        } else {
+            toast({
+                title: "Credits bought",
+                description: `You bought ${numCredits} credits`,
+            });
+        }
     }
     
     
