@@ -7,9 +7,9 @@ import Image from 'next/image';
 
 
 const messageSuggestions = [
-    "Lorem ipsum dolor sit amet consectetur?",
-    "Lorem ipsum dolor sit amet consectetur?",
-    "Lorem ipsum dolor sit amet consectetur?",
+    "What can you do?",
+    "Tell me a joke",
+    "Tell me something interesting!",
 ]
 export default function AgentWithSuggestions(props: AgentPublic){
     const router = useRouter();
@@ -43,10 +43,10 @@ export default function AgentWithSuggestions(props: AgentPublic){
                 </div>
             </div>
             
-            <div className="w-fit mx-auto mt-4 flex flex-col gap-1 ">
+            <div className="w-[80%] mx-auto mt-4 flex flex-col gap-1 ">
                 {
                     messageSuggestions.map((message, index) => (
-                        <Button key={index} className="font-light" variant="outline" onClick={()=> handleClick(message)}>{message}</Button>
+                        <Button key={index} className="font-light w-full" variant="outline" onClick={()=> handleClick(message)}>{message}</Button>
                     ))
                 }
             </div>

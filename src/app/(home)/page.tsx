@@ -72,7 +72,6 @@ export default function Home({
                 </div>
                 <div className="flex justify-center">
                     <HorizontalScroll>
-                        {/*todo diff query for these*/}
                         {popularAgents.data && popularAgents.data.map((agent, index) => (
                             <AgentWithSuggestions key={index} {...agent} />
                         ))

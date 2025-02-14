@@ -28,8 +28,7 @@ export default async function UserPage() {
         fetchChatsOrReturnEmpty({ includeMessages: true, order: 'desc' }),
     ]);
     
-    // todo top picks algorithm
-    const category = categories[0];
+    const category = featuredAgents[0].tags[0] || categories[0];
     const topPicks = await fetchAgentsOrReturnEmpty({ tags: [category], limit: 6, sort: 'chats', order: 'desc' });
     
     return (
