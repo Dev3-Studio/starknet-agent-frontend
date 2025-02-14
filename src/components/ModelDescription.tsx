@@ -1,9 +1,23 @@
-import { LLMModel } from '@/lib/types';
+import Image from 'next/image';
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-export default function ModelDescription({name, description, image}: LLMModel){
+export interface ModelDescriptionProps extends  React.HTMLProps<HTMLDivElement> {
+    name: string;
+    description: string;
+    image: string;
+}
+
+export default function ModelDescription({ className, name, description, image }: ModelDescriptionProps) {
     return (
-        <div className="flex flex-col items-center pt-10 mt-32">
-            <img src={image} alt={name} className="w-8 h-8 rounded-full"/>
+        <div className={cn('flex flex-col items-center', className)}>
+            <Image
+                src={image}
+                alt={name}
+                className="w-24 h-24 rounded-full"
+                width={128}
+                height={128}
+            />
             <p className="text-lg font-semibold">{name}</p>
             <p className="text-sm text-muted-foreground">{description}</p>
         </div>);
