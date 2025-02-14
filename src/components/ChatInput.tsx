@@ -28,7 +28,7 @@ const ChatInput = (props: { inputRef: React.RefObject<HTMLInputElement>, disable
     }
     
     return (
-        <div className="flex mb-1 p-4 mx-auto w-full max-w-screen-md rounded-2xl">
+        <div className="flex mb-1 pb-4 mx-auto w-full max-w-screen-md rounded-2xl">
             {/*<SpeechInput inputRef={props.inputRef}/>*/}
             <Input
                 className="focus-visible:ring-primary bg-accent rounded-l-2xl"
