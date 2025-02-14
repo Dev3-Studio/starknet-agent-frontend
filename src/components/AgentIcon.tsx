@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/ui/avatar';
+import { cn } from '@/lib/utils';
 
-export default function AgentIcon({ src, name }: { src?: string, name: string, id: string }) {
+export default function AgentIcon({ src, name, active }: { src?: string, name: string, active: boolean }) {
     // limit to 2 initials
     const getInitials = (name: string) => {
         const words = name.split(' ');
@@ -8,7 +9,10 @@ export default function AgentIcon({ src, name }: { src?: string, name: string, i
     }
     
     return(
-        <Avatar className="hover:ring-4 ring-primary cursor-pointer w-full aspect-square h-fit">
+        <Avatar className={cn(
+            "hover:ring-4 ring-primary cursor-pointer w-full aspect-square h-fit",
+            active && "ring-4"
+        )}>
             <AvatarImage src={src}/>
             {/*first character of every word*/}
             <AvatarFallback>{getInitials(name)}</AvatarFallback>
