@@ -24,7 +24,7 @@ export default function AgentIcon({ src, name, active, id }: { src?: string, nam
             "hover:ring-4 ring-primary cursor-pointer w-full aspect-square h-fit",
             active && "ring-4"
         )}>
-            <AvatarImage src={src}/>
+            <AvatarImage src={src} className="object-cover"/>
             {/*first character of every word*/}
             <AvatarFallback>{getInitials(name)}</AvatarFallback>
         </Avatar>

@@ -14,7 +14,7 @@ export default function ModelDescription({ className, name, description, image }
             <Image
                 src={image}
                 alt={name}
-                className="w-24 h-24 rounded-full"
+                className="w-24 h-24 rounded-full object-cover"
                 width={128}
                 height={128}
             />
