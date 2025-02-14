@@ -5,8 +5,21 @@ import Image from 'next/image';
 import { formatAddress } from '@/lib/utils';
 import { MessageSquare } from 'lucide-react';
 import ChatInput from '@/ChatInput';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function ContinueTalking(props: AgentPublic){
+    const router = useRouter();
+    
+    const inputRef = React.useRef<HTMLInputElement>(null);
+    
+    function sendMessage(input: string | null){
+        if (!input) return;
+        // clear input
+        inputRef.current!.value = '';
+        //redirect to chat with message param set
+        router.push(`/chat?agentId=${props.id}?message=${input}`);
+    }
     
     // todo finish implement
     return (
@@ -46,7 +59,7 @@ export default function ContinueTalking(props: AgentPublic){
                 </div>
             
                 {/*message box*/}
-                {/*<ChatInput inputRef={inputRef} onSend={sendMessage}/>*/}
+                <ChatInput inputRef={inputRef} onSend={sendMessage}/>
                 
             </div>
         

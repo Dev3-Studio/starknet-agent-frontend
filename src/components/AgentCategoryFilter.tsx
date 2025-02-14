@@ -13,10 +13,10 @@ export default function AgentCategoryFilter() {
     
     const [category, setCategory] = useState(categories[0]);
     
-    const popularAgents = useQuery({
+    const filteredAgents = useQuery({
         queryKey: ['filteredAgents', category],
         queryFn: async () => {
-            const res = await getAgents({ limit: 1, sort: 'chats', order: 'desc', tags: [category] });
+            const res = await getAgents({ sort: 'chats', order: 'desc', tags: [category] });
             if ('error' in res) return [];
             return res;
         },
@@ -37,13 +37,12 @@ export default function AgentCategoryFilter() {
                 </div>
             </HorizontalScroll>
 
-            {/*todo filter agents by the selected category */}
             <HorizontalScroll>
                 {
-                    !popularAgents.data || popularAgents.data.length === 0 && <p>No agents found</p>
+                    !filteredAgents.data || filteredAgents.data.length === 0 && <p>No agents found</p>
                 }
                 
-                {popularAgents.data && popularAgents.data.map((agent, index) => (
+                {filteredAgents.data && filteredAgents.data.map((agent, index) => (
                     <AgentCard key={index} {...agent} />
                 ))}
             </HorizontalScroll>

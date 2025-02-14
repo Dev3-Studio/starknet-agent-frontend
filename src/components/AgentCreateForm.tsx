@@ -150,7 +150,6 @@ export default function AgentCreateForm() {
         
         
         try {
-            // todo file uploads to bucket but get a net::ERR_ABORTED 500 (Internal Server Error), maybe need longer timeout?
             const response = await fetch(presignedUrl, {
                 method: 'PUT',
                 body: file,

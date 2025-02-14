@@ -10,7 +10,6 @@ import { SessionProvider } from 'next-auth/react';
 export default function StarknetProvider({children} : {children: React.ReactNode}) {
     const chains = [mainnet]
     
-    // todo check all values, maybe add alchemy provider
     const connectors = isInArgentMobileAppBrowser() ? [
         ArgentMobileConnector.init({
             options: {
