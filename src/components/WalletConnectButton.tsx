@@ -1,7 +1,7 @@
 'use client';
 // dialogAtom.ts
 import { atom } from 'jotai';
-export const dialogOpenAtom = atom(false);
+export const dialogOpenAtom = atom<{open: boolean, redirect?:string}>({ open: false });
 
 import * as React from 'react';
 import { useAtom } from 'jotai';
@@ -62,7 +62,7 @@ export default function WalletConnectButton() {
             signOut({ redirect: false }).catch();
         } else {
             signOut({ redirect: false }).catch();
-            setIsOpen(true);
+            setIsOpen({ open: true });
         }
     }
     
@@ -74,7 +74,7 @@ export default function WalletConnectButton() {
             >
                 {status === 'authenticated' ? 'Log Out' : 'Connect Wallet'}
             </Button>
-            <ProviderSelectDialog open={isOpen} setOpen={setIsOpen} />
+            <ProviderSelectDialog open={isOpen.open} setOpen={()=>setIsOpen({open: true})} />
         </div>
     );
 }
@@ -92,6 +92,7 @@ export function ProviderSelectDialog({
     const { address } = useAccount();
     const { signTypedDataAsync } = useSignTypedData({});
     const { toast } = useToast();
+    const [isOpen, setIsOpen] = useAtom(dialogOpenAtom);
     
     const getConnectorById = (id: string) => connectors.find(connector => connector.id === id);
     
@@ -112,10 +113,23 @@ export function ProviderSelectDialog({
         if (!token) return;
         const typedData = getMessageTypedData(formatCSRF(token));
         const signature = await signTypedDataAsync(typedData);
-        await signIn('starknet', {
+        const res = await signIn('starknet', {
             signature: JSON.stringify(stark.formatSignature(signature)),
-            address
+            address, redirect: !(isOpen.redirect === undefined), callbackUrl: isOpen.redirect,
         });
+        
+        if (res && res.ok) toast({
+            title: 'Successfully connected',
+            description: 'You have successfully connected your wallet',
+        });
+        
+        if (res && res.error) toast({
+            title: 'Failed to connect',
+            description: 'Failed to connect your wallet',
+            variant: 'destructive'
+        });
+        
+        
     }
     
     if (isDesktop) {

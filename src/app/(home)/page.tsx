@@ -32,8 +32,10 @@ export default function Home({
 }) {
     
     const [, setIsOpen] = useAtom(dialogOpenAtom);
+    
+    
     if (searchParams.error === 'unauthorized') {
-        setIsOpen(true);
+        setIsOpen({ open: true, redirect: '/' });
         // remove searchParams.error
         delete searchParams.error;
     }

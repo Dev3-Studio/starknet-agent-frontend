@@ -16,7 +16,7 @@ export default function RedirectButton(){
         if (status === 'authenticated') {
             router.push('/forge-agent');
         } else {
-            setIsOpen(true);
+            setIsOpen({ open: true, redirect: '/forge-agent' });
         }
     }
     
