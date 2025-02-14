@@ -1,4 +1,4 @@
-import { AppSidebar } from '@/app-sidebar';
+import AppSidebar from '@/app-sidebar';
 import FixedSidebar from '@/FixedSidebar';
 import { auth } from '@/config/auth';
 import { redirect } from 'next/navigation';
@@ -17,7 +17,7 @@ export default async function ChatLayout({
                 <FixedSidebar/>
             </div>
             <div className="grid grid-cols-[auto,1fr] pl-24">
-                <AppSidebar/>
+                <AppSidebar />
                 {children}
             </div>
         </div>

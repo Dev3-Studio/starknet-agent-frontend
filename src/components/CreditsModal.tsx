@@ -14,7 +14,7 @@ export default function CreditsModal(){
             <DialogTrigger asChild>
                 <Coins className="size-12 rounded-full bg-background text-yellow-400 border-yellow-400 border cursor-pointer p-2 " />
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[min(45rem,60vw)] max-w-[90vw]">
+            <DialogContent className="sm:max-w-[min(45rem,60vw)] max-w-[90vw] py-8">
                 <Credits/>
             </DialogContent>
         </Dialog>

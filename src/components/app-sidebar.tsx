@@ -14,32 +14,37 @@ import { ArrowLeftToLine } from 'lucide-react';
 import ChatHistory from '@/ChatHistory';
 import RecentAICard from '@/RecentAICard';
 import HorizontalScroll from '@/HorizontalScroll';
-import { redirect, usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getChat, getChats } from '@/actions/chats';
+import { getChats } from '@/actions/chats';
 
 
-export function AppSidebar() {
+export default function AppSidebar() {
     const router = useRouter();
     const { toggleSidebar } = useSidebar();
     const pathname = usePathname();
-    const { data: currentChat } = useQuery({
-        queryKey: ['agent', pathname],
-        queryFn: async () => {
-            const regex = /\/chat\/(.*)/;
-            const match = pathname.match(regex);
-            if (!match) return null;
-            return await getChat(match[1]);
-        }
-    });
+    // const { data: currentChat, isError: isErrorChat } = useQuery({
+    //     queryKey: ['agent', pathname],
+    //     queryFn: async () => {
+    //         const regex = /\/chat\/(.*)/;
+    //         const match = pathname.match(regex);
+    //         if (!match) return null;
+    //         return await getChat(match[1]);
+    //     }
+    // });
     const { data: recentChats } = useQuery({
         queryKey: ['recentChats'],
         queryFn: async () => {
-            return await getChats({ order: 'desc' });
+            const res = await getChats({ order: 'desc' });
+            
+            if ('error' in res) {
+                router.push('/?error=unauthorized');
+                return;
+            }
+            
+            return res;
         }
     });
-    
-    if (recentChats && 'error' in recentChats) return router.push('/?error=unauthorized')
     
     return (
         <Sidebar side="left" className="h-full">
