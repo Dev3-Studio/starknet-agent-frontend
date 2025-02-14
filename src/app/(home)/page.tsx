@@ -82,9 +82,9 @@ export default function Home({
             </section>
 
             {/* CTA Section */}
-            <div className="px-10">
-                <section className="text-center bg-[url(../../public/space.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl bg-blend-darken px-20 py-16 bg-black bg-opacity-50 max-w-custom mx-auto">
-                    <h2 className="text-3xl font-bold mb-4">Forge you own AI agent expert</h2>
+            <div className="sm:px-10 px-2">
+                <section className="text-center bg-[url(../../public/space.jpg)] bg-cover bg-center bg-no-repeat rounded-2xl bg-blend-darken sm:px-20 px-10 py-16 bg-black bg-opacity-50 max-w-custom mx-auto">
+                    <h2 className="text-3xl font-bold mb-4">Forge your own AI agent expert</h2>
                     <p className="font-light mb-8">Develop, Train & Deploy AI Agents for Businesses—Transform Your Prompting Skills into a Scalable Passive Income Stream</p>
                     <RedirectButton/>
                 </section>
@@ -95,32 +95,32 @@ export default function Home({
                 <div className="flex justify-center mb-4">
                     <HorizontalScroll>
                         <Card className="w-[20rem] shrink-0 p-4">
-                            <Image className="w-full aspect-video" src={code} alt="Code" />
+                            <Image className="w-full aspect-video" src={code} alt="No-code AI" />
                             <CardHeader className="text-foreground text-xl pb-2 pt-4">
-                                No coding required
+                                No-Code AI Customization
                             </CardHeader>
                             <CardContent className="text-sm">
-                                Easily teach, train, and customize AI agents for your business
+                                Effortlessly design, train, and deploy AI agents tailored to your business needs.
                             </CardContent>
                         </Card>
-
+                        
                         <Card className="w-[20rem] shrink-0 p-4">
-                            <Image className="w-full aspect-video object-cover" src={computer} alt="Code" />
+                            <Image className="w-full aspect-video object-cover" src={computer} alt="Process Automation" />
                             <CardHeader className="text-foreground text-xl pb-2 pt-4">
-                                Teach your processes
+                                Automate Your Workflows
                             </CardHeader>
                             <CardContent className="text-sm">
-                                Turn your processes into instructions for your AI agents.
+                                Transform your business processes into step-by-step instructions for AI agents.
                             </CardContent>
                         </Card>
-
+                        
                         <Card className="w-[20rem] shrink-0 p-4">
-                            <Image className="w-full aspect-video object-cover" src={puzzle} alt="Code" />
+                            <Image className="w-full aspect-video object-cover" src={puzzle} alt="AI Skills" />
                             <CardHeader className="text-foreground text-xl pb-2 pt-4">
-                                Guide your AI Agents skills
+                                Empower AI with Skills
                             </CardHeader>
                             <CardContent className="text-sm">
-                                Equip AI agents with AI Tools that give them abilities, from searching Google to transcribing a YouTube video and much more.
+                                Provide AI agents with powerful tools for web searches, video transcription, and more.
                             </CardContent>
                         </Card>
                     </HorizontalScroll>

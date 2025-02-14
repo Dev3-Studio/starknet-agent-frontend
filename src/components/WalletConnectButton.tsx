@@ -1,5 +1,4 @@
 'use client';
-// dialogAtom.ts
 import { atom } from 'jotai';
 export const dialogOpenAtom = atom<{open: boolean, redirect?:string}>({ open: false });
 
@@ -55,7 +54,6 @@ const providers: Provider[] = [
 export default function WalletConnectButton() {
     const [isOpen, setIsOpen] = useAtom(dialogOpenAtom);
     const { status } = useSession();
-    const { isConnected } = useAccount();
     
     function handleClick() {
         if (status === 'authenticated') {
@@ -184,7 +182,7 @@ export function ProviderSelectDialog({
     
     return (
         <Drawer open={open} onOpenChange={setOpen}>
-            <DrawerContent className="bg-gradient-to-t from-white to-primary px-16">
+            <DrawerContent className="bg-gradient-to-t from-white to-primary px-8">
                 <DrawerHeader className="text-left">
                     <DrawerTitle className="text-center">Connect Wallet</DrawerTitle>
                 </DrawerHeader>
@@ -193,7 +191,7 @@ export function ProviderSelectDialog({
                         const connector = getConnectorById(provider.id);
                         return (
                             <Button
-                                className="w-[20rem] mx-auto ring ring-ring px-2"
+                                className="w-full mx-auto ring ring-ring px-2"
                                 key={index}
                                 onClick={() => handleConnect(connector!)}
                             >
@@ -211,10 +209,8 @@ export function ProviderSelectDialog({
                         );
                     })}
                 </div>
-                <DrawerFooter className="pt-2">
-                    <DrawerClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                    </DrawerClose>
+                <DrawerFooter className="pt-2 pb-8">
+                    <Button variant="outline" onClick={() => setIsOpen({ open:false  })}>Cancel</Button>
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>
