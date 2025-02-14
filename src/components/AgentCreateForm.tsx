@@ -12,7 +12,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { AgentCreate, zAgentCreate, zAgentTool } from '@/lib/dto';
+import { zAgentCreate, zAgentTool } from '@/lib/dto';
 import { useDropzone } from 'react-dropzone';
 import React from 'react';
 import { ImagePlus, Info, Trash2 } from 'lucide-react';
@@ -28,7 +28,7 @@ import {
 } from '@/components/ui/select';
 import { categories } from '@/lib/constants';
 import { useFieldArray } from 'react-hook-form';
-import { Plus, Trash } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Textarea } from '@/ui/textarea';
 import { Card, CardContent } from '@/ui/card';
 import Ajv from 'ajv';
@@ -36,7 +36,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/ui/tooltip';
 import getPresignedUrl from '@/actions/getPresignedUrl';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/ui/use-toast';
-import { AutosizeTextarea } from '@/ui/autoresizetextarea';
 
 const zJsonTemplate = z.string().refine(
     (value) => {
@@ -441,7 +440,7 @@ export default function AgentCreateForm() {
                                         </FormControl>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Describe your agent's background and personality.  This is provided to the agent.</p>
+                                        <p>Describe your agent&apos;s background and personality.  This is provided to the agent.</p>
                                     </TooltipContent>
                                 </Tooltip>
                                 <FormMessage/>
@@ -474,7 +473,7 @@ export default function AgentCreateForm() {
                         <FormLabel>Rules</FormLabel>
                         <Tooltip>
                             <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
-                            <TooltipContent><p>These are specific rules your agent MUST follow. They're given to the agent, make them short and clear. Add multiple rules if necessary.</p></TooltipContent>
+                            <TooltipContent><p>These are specific rules your agent MUST follow. They&apos;re given to the agent, make them short and clear. Add multiple rules if necessary.</p></TooltipContent>
                         </Tooltip>
                         {form.watch('rules')?.map((_, index) => (
                             <FormField
@@ -539,7 +538,7 @@ export default function AgentCreateForm() {
                                                             <Input placeholder="search_google" {...field} />
                                                         </FormControl>
                                                     </TooltipTrigger>
-                                                    <TooltipContent><p>A short, descriptive name for the tool ('search_google').  This will be used internally by the agent.</p></TooltipContent>
+                                                    <TooltipContent><p>A short, descriptive name for the tool (&apos;search_google&apos;).  This will be used internally by the agent.</p></TooltipContent>
                                                 </Tooltip>
                                                 <FormMessage/>
                                             </FormItem>
@@ -585,7 +584,7 @@ export default function AgentCreateForm() {
                                                     </TooltipTrigger>
                                                     <TooltipContent>
                                                         <p>
-                                                            A JSON schema defining the arguments this tool accepts.  This uses the <a href="https://json-schema.org/" target="_blank" rel="noopener noreferrer" className="underline">JSON Schema</a> standard.  This example shows a schema for a single "query" string.  Make sure you describe *every* property!
+                                                            A JSON schema defining the arguments this tool accepts.  This uses the <a href="https://json-schema.org/" target="_blank" rel="noopener noreferrer" className="underline">JSON Schema</a> standard.  This example shows a schema for a single &quot;query&quot; string.  Make sure you describe *every* property!
                                                         </p>
                                                     </TooltipContent>
                                                 </Tooltip>
@@ -695,7 +694,7 @@ export default function AgentCreateForm() {
                                                     </TooltipTrigger>
                                                     <TooltipContent>
                                                         <p>
-                                                            The URL template for the API endpoint. Use curly braces <code>{`{}`}</code> to denote placeholders for arguments defined in the arguments schema.  For example, if your arguments schema defines a "query" property, you can use <code>{`{query}`}</code> in the URL.
+                                                            The URL template for the API endpoint. Use curly braces <code>{`{}`}</code> to denote placeholders for arguments defined in the arguments schema.  For example, if your arguments schema defines a &quot;query&quot; property, you can use <code>{`{query}`}</code> in the URL.
                                                         </p>
                                                     </TooltipContent>
                                                 </Tooltip>
