@@ -9,7 +9,9 @@ import { categories } from '@/lib/constants';
 export default function AgentCategoryFilter() {
 
     return (
-        <div className="flex flex-col gap-4 pt-4">
+        
+        
+        <div className="flex flex-col gap-4 pt-4 items-center">
             <HorizontalScroll>
                 <div className=''>
                         <ToggleGroup type="single" className="p-1 w-full overflow-hidden">
@@ -25,5 +27,7 @@ export default function AgentCategoryFilter() {
                 <AgentCard name="" creator="" description="" image="" />
             </HorizontalScroll>
         </div>
+        
+        
     )
 }
