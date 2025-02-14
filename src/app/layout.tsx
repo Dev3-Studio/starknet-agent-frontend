@@ -8,6 +8,7 @@ import { SidebarProvider } from '@/ui/sidebar';
 const inter = Inter({ subsets: ['latin'] });
 import { SetMetadata } from '@/metadata';
 import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
+import { TooltipProvider } from '@/ui/tooltip';
 
 /*##################################################################
  * Do not change metadata below, change it in the metadata.ts file *
@@ -58,7 +59,9 @@ export default function RootLayout({
                 >
                     <StarknetProvider>
                         <SidebarProvider>
+                            <TooltipProvider>
                             {children}
+                            </TooltipProvider>
                         </SidebarProvider>
                         <Toaster/>
                     </StarknetProvider>

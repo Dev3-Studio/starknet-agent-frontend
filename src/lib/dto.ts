@@ -90,6 +90,7 @@ export const zAgentCreate = zAgent
     }));
 export type AgentCreate = z.infer<typeof zAgentCreate>;
 
+
 export const zMessage = z.object({
     type: z.string(),
     data: z.object({
