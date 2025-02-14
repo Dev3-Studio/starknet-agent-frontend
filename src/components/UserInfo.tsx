@@ -27,7 +27,7 @@ export default function UserInfo() {
     return(
         <div className="bg-primary flex px-4 h-20">
             <Avatar className="my-auto">
-                <AvatarImage src="https://avatars.dicebear.com/api/avataaars/1.svg"/>
+                <AvatarImage src={`https://api.dicebear.com/9.x/shapes/svg?seed=${session.data?.user.address}`} />
                 <AvatarFallback>JD</AvatarFallback>
             </Avatar>
             
