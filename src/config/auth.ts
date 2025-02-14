@@ -59,6 +59,10 @@ export const authConfig = {
                     }
                     
                     const newUser = await createUser({ walletAddress: credentials.address });
+                    if ('error' in newUser && newUser.error !== 'User already exists') {
+                        console.error('Failed to create user:', newUser.error);
+                        return null;
+                    }
                     
                     return {
                         id: credentials.address,
