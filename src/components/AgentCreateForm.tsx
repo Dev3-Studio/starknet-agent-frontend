@@ -468,12 +468,14 @@ export default function AgentCreateForm() {
                         )}
                     />
                     
-                    <div>
-                        <FormLabel>Rules</FormLabel>
-                        <Tooltip>
-                            <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
-                            <TooltipContent><p>These are specific rules your agent MUST follow. They&apos;re given to the agent, make them short and clear. Add multiple rules if necessary.</p></TooltipContent>
-                        </Tooltip>
+                    <div className="flex flex-col">
+                        <div>
+                            <FormLabel>Rules</FormLabel>
+                            <Tooltip>
+                                <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
+                                <TooltipContent><p>These are specific rules your agent MUST follow. They&apos;re given to the agent, make them short and clear. Add multiple rules if necessary.</p></TooltipContent>
+                            </Tooltip>
+                        </div>
                         {form.watch('rules')?.map((_, index) => (
                             <FormField
                                 key={index}
@@ -504,8 +506,8 @@ export default function AgentCreateForm() {
                         ))}
                         <Button
                             type="button"
-                            variant="outline"
-                            className="mt-2"
+                            variant="secondary"
+                            className="mt-2 w-[8rem]"
                             onClick={() => form.setValue('rules', [...form.getValues('rules'), ''])}
                         >
                             <Plus className="h-4 w-4 mr-2"/>
@@ -515,12 +517,16 @@ export default function AgentCreateForm() {
                     
                     {/* Tools Array */
                     }
-                    <div className="space-y-4">
+                    <div className="space-y-4 flex flex-col">
+                        <div>
+                        
                         <FormLabel>Tools</FormLabel>
                         <Tooltip>
                             <TooltipTrigger className="inline-flex h-4 w-4 items-center justify-center rounded-full text-xs text-muted-foreground"><Info/></TooltipTrigger>
                             <TooltipContent><p>Tools allow your agent to interact with external APIs. Define how your agent will use these tools.</p></TooltipContent>
                         </Tooltip>
+                        </div>
+                        
                         {toolFields.map((field, index) => (
                             <Card key={field.id}>
                                 <CardContent className="pt-6 space-y-4">
@@ -829,8 +835,9 @@ export default function AgentCreateForm() {
                         ))}
                         
                         <Button
+                            className="max-w-[8rem]"
                             type="button"
-                            variant="outline"
+                            variant="secondary"
                             onClick={() => appendTool({
                                 name: '',
                                 description: '',
