@@ -156,6 +156,7 @@ export default function AgentCreateForm() {
                 body: file,
                 headers: {
                     'Content-Type': file.type,
+                    'Content-Length': file.size.toString(),
                 },
             });
             
