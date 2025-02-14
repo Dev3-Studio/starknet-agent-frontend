@@ -7,16 +7,18 @@ import { getAgents } from '@/actions/agents';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useDebounce } from 'use-debounce';
 
 export default function SearchBar() {
     const router = useRouter();
     const [query, setQuery] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    const [debouncedQuery] = useDebounce(query, 200);
     
     const { data } = useQuery({
-        queryKey: ['searchAgents', query],
+        queryKey: ['searchAgents', debouncedQuery],
         queryFn: async () => {
-            const res = await getAgents({ searchQuery: query });
+            const res = await getAgents({ searchQuery: debouncedQuery });
             if ('error' in res) return [];
             return res;
         },

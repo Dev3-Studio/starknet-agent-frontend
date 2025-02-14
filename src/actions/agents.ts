@@ -25,6 +25,7 @@ export interface GetAgentsOptions {
     searchQuery?: string;
 }
 export async function getAgents(options: GetAgentsOptions): Promise<AgentPublic[] | ErrorResponse> {
+    console.log(options);
     const searchParams: string[][] = [];
     Object.entries(options).forEach(([key, value]) => {
         if (Array.isArray(value)) {

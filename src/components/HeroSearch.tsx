@@ -8,21 +8,24 @@ import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/ui/button';
+import { useDebounce } from 'use-debounce';
 
 export default function HeroSearch() {
     const router = useRouter();
     const [query, setQuery] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    const [debouncedQuery] = useDebounce(query, 200);
     
     const { data } = useQuery({
-        queryKey: ['searchAgents', query],
+        queryKey: ['searchAgents', debouncedQuery],
         queryFn: async () => {
-            const res = await getAgents({ searchQuery: query });
+            const res = await getAgents({ searchQuery: debouncedQuery });
             if ('error' in res) return [];
             return res;
         },
         staleTime: 1000 * 60 * 5,
     });
+    
     
     function handleClick(id: string) {
         router.push(`/chat/?agentId=${id}`);
@@ -31,8 +34,6 @@ export default function HeroSearch() {
     return (
         <div className="relative w-full">
             <span className="pl-2 flex bg-muted w-full rounded-md">
-
-                
                 <Input
                     className="placeholder:text-foreground placeholder:font-light focus-visible:ring-0 border-0 my-1 text-xs sm:text-base"
                     placeholder="Search for any agent service.."
