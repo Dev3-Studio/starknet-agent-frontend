@@ -22,7 +22,7 @@ export const authConfig = {
                         console.log('Missing credentials');
                         return null;
                     }
-                    
+                    console.log('headers',req.headers);
                     // Get and validate CSRF token
                     const csrfToken = await getCsrfToken({ req: { headers: req.headers } });
                     if (!csrfToken) {
